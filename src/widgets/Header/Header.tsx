@@ -6,9 +6,11 @@ import key from "../../assets/Vector-header_key.svg";
 import { useEffect, useState } from "react";
 import logo1 from "../../assets/Vectorheader-1.svg";
 import logo2 from "../../assets/Vectorheader-2.svg";
+import { IoMdClose } from "react-icons/io";
 
 export const Header = () => {
   const [logoSize, setLogoSize] = useState(120); // Boshlang‘ich o‘lcham
+  const [isOpen, setIsOpen] = useState(false); // Mobil menyu holati
 
   useEffect(() => {
     const handleScroll = () => {
@@ -117,12 +119,52 @@ export const Header = () => {
         <Link className={styles.header_login} to={"/login"}>
           <img src={key} alt="" />
         </Link>
-        <button className={styles.header_burger}>
+        <button
+          onClick={() => setIsOpen(true)}
+          className={styles.header_burger}
+        >
           <span></span>
           <span></span>
           <span></span>
         </button>
       </div>
+      {isOpen && (
+        <div className={styles.header_menu}>
+          <div className={styles.header_menu_top}>
+            <Link
+              style={{ display: "flex !important" }}
+              to={"tel:88006005156"}
+              className={styles.header_right_phone}
+            >
+              <img src={logo2} alt="" />
+              <p>
+                8 800 600 51 56
+                <span>Многоканальный</span>
+              </p>
+            </Link>
+            <button onClick={() => setIsOpen(false)}>
+              <IoMdClose />
+            </button>
+          </div>
+          <div className={styles.header_menu_list}>
+            <Link to={"/"} className={styles.header_right_item}>
+              Получить заем
+            </Link>
+            <Link to={"/"} className={styles.header_right_item}>
+              Погасить заем
+            </Link>
+            <Link to={"/"} className={styles.header_right_item}>
+              О сервисе
+            </Link>
+            <Link to={"/"} className={styles.header_right_item}>
+              Лицензия ЦБ
+            </Link>
+            <Link to={"/"} className={styles.header_right_item}>
+              СМИ о нас
+            </Link>{" "}
+          </div>
+        </div>
+      )}
     </>
   );
 };

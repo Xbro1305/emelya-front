@@ -37,4 +37,27 @@
       gap: 10px;
     }
   }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+
+    a {
+      text-align: center !important;
+      margin: 20px 0 !important;
+    }
+
+    > div > section {
+      display: grid !important;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+
+      span {
+        grid-column: 1 / span 4;
+      }
+    }
+  }
 }

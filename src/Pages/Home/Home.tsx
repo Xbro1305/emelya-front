@@ -22,10 +22,9 @@ import certificate from "../../assets/certificate.png";
 import { useState } from "react";
 import { NumericFormat } from "react-number-format";
 import { Link } from "react-router-dom";
+import "swiper/swiper-bundle.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
 import { BiMinus, BiPlus } from "react-icons/bi";
 
 interface Advantage {

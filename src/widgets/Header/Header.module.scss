@@ -230,6 +230,51 @@
       display: none;
     }
   }
+
+  &_menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    z-index: 99999999;
+
+    &_top {
+      border-bottom: 1px solid #f5b45f;
+      margin: 10px;
+      padding: 15px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      button {
+        font-size: 28px;
+        color: #ffd076;
+      }
+
+      .header_right_phone {
+        display: flex !important;
+        margin: 0;
+      }
+    }
+    &_list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 40px;
+
+      .header_right_item {
+        font-family: Inter;
+        font-weight: 400;
+        font-size: 18px !important;
+        line-height: 300%;
+        letter-spacing: 0%;
+        text-align: center;
+      }
+    }
+  }
 }
 
 .mob_header {
