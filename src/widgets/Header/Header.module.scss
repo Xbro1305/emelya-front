@@ -1,0 +1,298 @@
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: transparent;
+  backdrop-filter: blur(10px);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 8999999;
+  padding: 0px calc(var(--sides-padding) - 20px);
+
+  &_logo {
+    display: flex;
+    align-items: center;
+
+    > :first-child {
+      border-radius: 50%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      object-position: center;
+      height: 150px;
+
+      @media (max-width: 1024px) {
+        width: 95px;
+      }
+    }
+
+    > :nth-child(2) {
+      @media (max-width: 1024px) {
+        width: 85px;
+        margin-left: -10px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      gap: 20px;
+
+      > :nth-child(1) {
+        width: 80px;
+      }
+
+      > :nth-child(2) {
+        width: 70px;
+      }
+    }
+  }
+
+  &_right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+
+    &_item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      color: #fff;
+      font-family: Inter;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: 0%;
+
+      &:hover {
+        color: #ffb700;
+        transition: all 0.3s ease-in-out;
+      }
+    }
+
+    @media (max-width: 540px) {
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 20px 5px;
+
+      button {
+        margin: 0;
+      }
+    }
+
+    &_phone {
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+      margin: 0 20px;
+
+      p {
+        white-space: nowrap;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        font-family: Inter;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        color: white;
+        span {
+          font-family: Inter;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 100%;
+          letter-spacing: 0%;
+          color: #f0be6f;
+        }
+      }
+    }
+  }
+
+  &_forInvestors {
+    box-shadow: 0.5px 0.5px 0px 0px #b47427;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    position: relative;
+
+    transition: all 0.3s ease;
+    background: linear-gradient(
+      246.28deg,
+      #b07e39 -3.55%,
+      #efb861 32.16%,
+      #ae6e2f 98.49%
+    );
+    color: white;
+    &:hover {
+      background: linear-gradient(
+        60.28deg,
+        #b07e39 -3.55%,
+        #efb861 32.16%,
+        #ae6e2f 98.49%
+      );
+    }
+
+    @media (max-width: 960px) {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &_login {
+    border: 1px solid #fbca71;
+    color: #fbca71;
+    font-family: Inter;
+    font-weight: 400;
+    background: linear-gradient(
+      246.28deg,
+      rgba(180, 116, 39, 0.1) -17.22%,
+      rgba(239, 184, 97, 0.1) 39.48%,
+      rgba(198, 119, 50, 0.1) 98.49%
+    );
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    border-radius: 25px;
+    padding: 10px 20px;
+
+    &:hover {
+      background: linear-gradient(
+        246.28deg,
+        rgba(180, 116, 39, 0.4) -17.22%,
+        rgba(239, 184, 97, 0.4) 39.48%,
+        rgba(198, 119, 50, 0.4) 98.49%
+      );
+    }
+  }
+
+  &_burger {
+    display: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 1000;
+
+    @media (max-width: 960px) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 7px;
+
+      span {
+        width: 22px;
+        height: 2px;
+
+        background: linear-gradient(
+          270deg,
+          #f5b45f -5.19%,
+          #ffd076 45.49%,
+          #de9e50 96.17%
+        );
+      }
+    }
+  }
+
+  &_tablet {
+    display: none;
+
+    @media (max-width: 1220px) {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      margin-left: 10px;
+      a {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  @media (max-width: 1220px) {
+    &_desktop {
+      display: none !important;
+    }
+
+    &_right_phone {
+      display: none;
+    }
+  }
+}
+
+.mob_header {
+  display: none;
+  z-index: 8999999;
+}
+
+@media (max-width: 960px) {
+  .header {
+    display: none;
+
+    &_logo {
+      flex: 1;
+    }
+
+    &_burger {
+      margin-right: var(--sides-padding);
+    }
+  }
+
+  .mob_header {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    gap: 20px;
+    top: 0;
+    width: 100%;
+    backdrop-filter: blur(10px);
+    padding: 0px calc(var(--sides-padding) - 20px);
+  }
+
+  .header_login {
+    width: 30px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+  }
+}
+
+@media (max-width: 540px) {
+  .header {
+    &_logo {
+      > :first-child {
+        width: 80px;
+      }
+
+      > :nth-child(2) {
+        width: 70px;
+      }
+    }
+
+    &_forInvestors {
+      padding: 5px 10px;
+      font-size: 12px;
+      line-height: 100%;
+      letter-spacing: 0%;
+    }
+  }
+
+  .mob_header {
+    padding: 0px calc(var(--sides-padding) - 10px);
+    gap: 10px;
+  }
+}
