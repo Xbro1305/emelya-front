@@ -334,6 +334,15 @@
             );
           }
         }
+
+        @media (max-width: 450px) {
+          display: grid;
+          grid-template-columns: repeat(2, auto);
+
+          a {
+            grid-column: 1 / span 2;
+          }
+        }
       }
 
       &_range {
@@ -518,12 +527,16 @@
       }
 
       @media (max-width: 790px) {
-        position: relative;
+        // position: relative;
+        background: url(../../assets/intro_coins.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
 
         &_bg {
-          width: 100%;
+          width: 100vw;
           bottom: 0;
-          transform: scale(1.2);
+          display: none;
         }
 
         &_content {
@@ -1169,7 +1182,6 @@
         position: relative;
         text-decoration: underline;
         text-decoration-color: #efb861;
-        text-underline-offset: 5px;
       }
 
       span {
