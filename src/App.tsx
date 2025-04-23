@@ -45,6 +45,15 @@ function App() {
             );
           })}
         </Route>
+        <Route
+          path="*"
+          element={
+            <div style={{ textAlign: "center", marginTop: "50px" }}>
+              <h1>404 Not Found</h1>
+              <a href="/">Home</a>
+            </div>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
@@ -57,7 +66,7 @@ const RoutePath = [
 const profilePath = [
   {
     name: "profile",
-    path: "/profile/investment-conditions",
+    path: "/profile/investment-condition",
     isHeader: false,
     element: <Condition />,
   },

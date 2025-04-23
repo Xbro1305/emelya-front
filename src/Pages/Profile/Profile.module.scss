@@ -269,7 +269,10 @@
   }
 
   @media (max-width: 1024px) {
-    height: calc(100vh - 120px);
-    overflow: hidden;
+    height: calc(100vh - 70px);
+    width: 100% !important;
+    > div {
+      width: 100% !important;
+    }
   }
 }
