@@ -11,6 +11,7 @@ import { Condition } from "./Pages/Profile/Conditions/Condition";
 import { MyInvestments } from "./Pages/Profile/MyInvestments/Investments";
 import { Calculator } from "./Pages/Profile/Calculator/Calculator";
 import { Operations } from "./Pages/Profile/Operations/Operations";
+import { Partners } from "./Pages/Profile/Partners/Partners";
 
 function App() {
   return (
@@ -83,6 +84,7 @@ export const PATHS = {
   MY_INVESTMENTS: "/profile/my-investments",
   CALCULATOR: "/profile/calculator",
   OPERATIONS: "/profile/operations",
+  PARTNERS: "/profile/partners",
 };
 
 const RoutePath = [
@@ -113,6 +115,12 @@ const profilePath = [
     path: PATHS.OPERATIONS,
     isHeader: false,
     element: <Operations />,
+  },
+  {
+    name: "partners",
+    path: PATHS.PARTNERS,
+    isHeader: false,
+    element: <Partners />,
   },
 ];
 
