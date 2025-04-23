@@ -89,7 +89,7 @@ export const Profile = () => {
               </button>
             </div>
             <div className={styles.header_menu_list}>
-              <Link to={"#"}>
+              <Link to={"profile/investment-conditions"}>
                 <img src={burgerIcon1} alt="Условия" />
                 Условия
               </Link>
