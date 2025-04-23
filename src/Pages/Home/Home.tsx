@@ -69,6 +69,56 @@ export const Home = () => {
   const [isPromoOpen, setIsPromoOpen] = useState(false);
   const [open, setOpen] = useState(0);
 
+  const getTermLabel = (term: number): string => {
+    const lastDigit = term % 10;
+    const lastTwoDigits = term % 100;
+
+    if (term % 30 === 0) {
+      const months = term / 30;
+      const monthLastDigit = months % 10;
+      const monthLastTwoDigits = months % 100;
+
+      if (monthLastDigit === 1 && monthLastTwoDigits !== 11) {
+        return `${months} месяц`;
+      } else if (
+        [2, 3, 4].includes(monthLastDigit) &&
+        ![12, 13, 14].includes(monthLastTwoDigits)
+      ) {
+        return `${months} месяца`;
+      } else {
+        return `${months} месяцев`;
+      }
+    }
+
+    if (term % 7 === 0) {
+      const weeks = term / 7;
+      const weekLastDigit = weeks % 10;
+      const weekLastTwoDigits = weeks % 100;
+
+      if (weekLastDigit === 1 && weekLastTwoDigits !== 11) {
+        return `${weeks} неделя`;
+      } else if (
+        [2, 3, 4].includes(weekLastDigit) &&
+        ![12, 13, 14].includes(weekLastTwoDigits)
+      ) {
+        return `${weeks} недели`;
+      } else {
+        return `${weeks} недель`;
+      }
+    }
+
+    if (lastDigit === 1 && lastTwoDigits !== 11) {
+      return `${term} день`;
+    } else if (
+      [2, 3, 4].includes(lastDigit) &&
+      ![12, 13, 14].includes(lastTwoDigits)
+    ) {
+      return `${term} дня`;
+    } else {
+      return `${term} дней`;
+    }
+  };
+
   return (
     <div className={styles.home}>
       <div className={styles.home_intro}>
@@ -127,14 +177,13 @@ export const Home = () => {
               </div>
               <div>
                 <p onClick={() => setSum(1500)}>1 500 ₽</p>
-                <p onClick={() => setSum(15000)}>15 000 ₽</p>
+                <p onClick={() => setSum(50000)}>50 000 ₽</p>
                 <p onClick={() => setSum(100000)}>100 000 ₽</p>
               </div>
             </div>
             <div className={styles.home_intro_right_range}>
               <section>
-                <p>Выберите срок</p>{" "}
-                <span>{term % 7 ? `${term} дней` : `${term / 7} недель `}</span>
+                <p>Выберите срок</p> <span>{getTermLabel(term)}</span>
               </section>
               <div
                 style={{ position: "relative" }}
@@ -151,7 +200,7 @@ export const Home = () => {
               </div>
               <div>
                 <p onClick={() => setTerm(5)}>5 дней </p>
-                <p onClick={() => setTerm(70)}>10 недель</p>
+                <p onClick={() => setTerm(63)}>9 недель</p>
                 <p onClick={() => setTerm(126)}>18 недель</p>
               </div>
             </div>

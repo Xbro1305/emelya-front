@@ -40,23 +40,6 @@ input:focus-visible {
   outline: none;
 }
 
-h1 {
-  font-size: 2rem;
-  color: #333;
-}
-h2 {
-  font-size: 1.5rem;
-  color: #666;
-}
-h3 {
-  font-size: 1.2rem;
-  color: #999;
-}
-h4 {
-  font-size: 1rem;
-  color: #ccc;
-}
-
 :root {
   --sides-padding: 220px;
 }

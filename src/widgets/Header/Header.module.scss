@@ -341,3 +341,208 @@
     gap: 10px;
   }
 }
+
+.investor {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 99999999;
+  backdrop-filter: blur(10px);
+  padding: 0px calc(var(--sides-padding) - 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  &_body {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    padding: 40px;
+    border-radius: 40px;
+    background: linear-gradient(
+      119.25deg,
+      rgba(46, 26, 0, 0.8) 25.28%,
+      rgba(0, 0, 0, 0.8) 98.75%
+    );
+    border: 1px solid #b47427;
+    position: relative;
+  }
+
+  &_title {
+    font-family: Forum;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: white;
+  }
+
+  &_closeButton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    font-size: 28px;
+    color: #ffd076;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      color: #f5b45f;
+      transform: scale(1.1);
+    }
+  }
+
+  &_form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+
+    &_label {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      p {
+        font-family: Inter;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        color: white;
+      }
+
+      span {
+        font-family: Inter;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        color: #5a482e;
+      }
+
+      input {
+        border-bottom: 1px solid #5a482e;
+        padding: 10px 0;
+        font-family: Inter;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        color: white;
+        width: 300px;
+      }
+    }
+
+    &_confirm {
+      max-width: 300px;
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+
+      input {
+        font-family: Inter;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        color: white;
+        appearance: none;
+        position: relative;
+
+        &::after {
+          width: 20px;
+          height: 20px;
+          border-radius: 5px;
+          background: linear-gradient(
+            246.28deg,
+            rgba(180, 116, 39, 0.1) -17.22%,
+            rgba(239, 184, 97, 0.1) 39.48%,
+            rgba(198, 119, 50, 0.1) 98.49%
+          );
+          border: 1px solid #5a482e;
+          content: "";
+          display: flex;
+        }
+
+        &:checked::after {
+          content: "✓" !important;
+          font-size: 14px;
+          width: 20px;
+          height: 20px;
+          border-radius: 5px;
+          background: linear-gradient(
+            246.28deg,
+            rgba(180, 116, 39, 0.4) -17.22%,
+            rgba(239, 184, 97, 0.4) 39.48%,
+            rgba(198, 119, 50, 0.4) 98.49%
+          );
+
+          border: 1px solid #5a482e;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #ffd076;
+        }
+      }
+
+      p {
+        font-family: Inter;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 135%;
+        letter-spacing: 0%;
+        color: white;
+
+        a {
+          font-family: Inter;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 135%;
+          letter-spacing: 0%;
+          text-decoration: underline;
+          text-decoration-style: dotted;
+          text-decoration-offset: 24%;
+          text-decoration-thickness: 7.5%;
+          color: #f5b45f;
+        }
+      }
+    }
+
+    > button {
+      width: 100%;
+      padding: 12px 0;
+      font-family: Inter;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      color: white;
+      background: linear-gradient(
+        246.28deg,
+        #b07e39 -3.55%,
+        #efb861 32.16%,
+        #ae6e2f 98.49%
+      );
+      border-radius: 8px;
+      border: none;
+
+      &:disabled {
+        background: linear-gradient(
+          246.28deg,
+          rgba(180, 116, 39, 0.4) -3.55%,
+          rgba(239, 184, 97, 0.4) 32.16%,
+          rgba(198, 119, 50, 0.4) 98.49%
+        );
+        cursor: not-allowed;
+      }
+    }
+  }
+}
