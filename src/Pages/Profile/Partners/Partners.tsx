@@ -349,6 +349,7 @@ export const Partners = () => {
                       <div className={styles.partners_table_body}>
                         {item.invests?.map((item, index) => (
                           <div
+                            key={index}
                             className={`${styles.partners_table_item_second} ${styles.partners_table_item}`}
                           >
                             <p>{item.sum} ₽</p>
