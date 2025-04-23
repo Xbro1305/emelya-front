@@ -151,7 +151,7 @@ const Header = ({
             </Link>
             <Link
               onClick={() => setTimeout(() => setIsOpen(false), 300)}
-              to={"#"}
+              to={PATHS.PARTNERS}
             >
               <img src={burgerIcon5} alt="Мои партнеры" />
               Мои партнеры
@@ -244,7 +244,7 @@ const Sidebar = ({
           <img src={burgerIcon4} alt="Мои операции" />
           <p>Мои операции</p>
         </Link>
-        <Link to={"#"}>
+        <Link to={PATHS.PARTNERS}>
           <img src={burgerIcon5} alt="Мои партнеры" />
           <p>Мои партнеры</p>
         </Link>
