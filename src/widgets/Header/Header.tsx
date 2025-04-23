@@ -8,6 +8,7 @@ import logo1 from "../../assets/Vectorheader-1.svg";
 import logo2 from "../../assets/Vectorheader-2.svg";
 import { IoMdClose } from "react-icons/io";
 import { PatternFormat } from "react-number-format";
+import { PATHS } from "../../App";
 
 export const Header = () => {
   const [logoSize, setLogoSize] = useState(120);
@@ -34,7 +35,7 @@ export const Header = () => {
   return (
     <>
       <header className={styles.header}>
-        <section className={styles.header_logo}>
+        <Link to={PATHS.HOME} className={styles.header_logo}>
           <img
             style={{
               height: `${logoSize}px`,
@@ -52,7 +53,7 @@ export const Header = () => {
             src={logoText}
             alt=""
           />
-        </section>
+        </Link>
         <div className={styles.header_right}>
           <Link to={"/"} className={styles.header_right_item}>
             Получить заем
@@ -84,13 +85,13 @@ export const Header = () => {
             <Link
               onClick={() => setIsInvestorModalOpen(true)}
               className={styles.header_forInvestors}
-              to={"/"}
+              to={localStorage.getItem("token") ? "/profile" : "#"}
             >
               Инвесторам
             </Link>
             <Link
               className={styles.header_login}
-              to={"#"}
+              to={localStorage.getItem("token") ? "/profile" : "#"}
               onClick={() => setIsInvestorModalOpen(true)}
             >
               Войти
@@ -99,7 +100,7 @@ export const Header = () => {
           <section className={styles.header_tablet}>
             <Link
               className={styles.header_login}
-              to={"#"}
+              to={localStorage.getItem("token") ? "/profile" : "#"}
               onClick={() => setIsInvestorModalOpen(true)}
             >
               <img src={logo1} alt="" />
@@ -109,7 +110,7 @@ export const Header = () => {
             </Link>
             <Link
               className={styles.header_login}
-              to={"#"}
+              to={localStorage.getItem("token") ? "/profile" : "#"}
               onClick={() => setIsInvestorModalOpen(true)}
             >
               <img src={key} alt="" />
@@ -137,7 +138,7 @@ export const Header = () => {
         </section>
         <Link
           className={styles.header_login}
-          to={""}
+          to={localStorage.getItem("token") ? "/profile" : "#"}
           onClick={() => setIsInvestorModalOpen(true)}
         >
           <img src={logo1} alt="" />
@@ -147,7 +148,7 @@ export const Header = () => {
         </Link>
         <Link
           className={styles.header_login}
-          to={"#"}
+          to={localStorage.getItem("token") ? "/profile" : "#"}
           onClick={() => setIsInvestorModalOpen(true)}
         >
           <img src={key} alt="" />

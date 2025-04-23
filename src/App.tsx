@@ -1,13 +1,16 @@
 import "./App.css";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import { Home } from "./Pages/Home/Home";
 import { Header } from "./widgets/Header/Header";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Footer } from "./widgets/Footer/Footer";
-import { Profile } from "./Pages/Profile/Profile";
+import { Profile } from "./Pages/Profile/ProfileLayout";
 import { Condition } from "./Pages/Profile/Conditions/Condition";
+import { MyInvestments } from "./Pages/Profile/MyInvestments/Investments";
+import { Calculator } from "./Pages/Profile/Calculator/Calculator";
+import { Operations } from "./Pages/Profile/Operations/Operations";
 
 function App() {
   return (
@@ -54,21 +57,62 @@ function App() {
             </div>
           }
         />
+        <Route path={PATHS.PROFILE} element={<ProfileNavigator />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
+const ProfileNavigator = () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return <Navigate to={PATHS.HOME} />;
+  }
+
+  const tokenType = localStorage.getItem("profileType");
+  if (tokenType == "investor")
+    return <Navigate to={PATHS.INVESTMENT_CONDITIONS} />;
+
+  return <Navigate to={PATHS.MY_INVESTMENTS} />;
+};
+
+export const PATHS = {
+  HOME: "/",
+  PROFILE: "/profile",
+  INVESTMENT_CONDITIONS: "/profile/investment-conditions",
+  MY_INVESTMENTS: "/profile/my-investments",
+  CALCULATOR: "/profile/calculator",
+  OPERATIONS: "/profile/operations",
+};
+
 const RoutePath = [
-  { name: "home", path: "/", isHeader: true, element: <Home /> },
+  { name: "home", path: PATHS.HOME, isHeader: true, element: <Home /> },
 ];
 
 const profilePath = [
   {
     name: "profile",
-    path: "/profile/investment-condition",
+    path: PATHS.INVESTMENT_CONDITIONS,
     isHeader: false,
     element: <Condition />,
+  },
+  {
+    name: "my-investments",
+    path: PATHS.MY_INVESTMENTS,
+    isHeader: false,
+    element: <MyInvestments />,
+  },
+  {
+    name: "calculator",
+    path: PATHS.CALCULATOR,
+    isHeader: false,
+    element: <Calculator />,
+  },
+  {
+    name: "operations",
+    path: PATHS.OPERATIONS,
+    isHeader: false,
+    element: <Operations />,
   },
 ];
 

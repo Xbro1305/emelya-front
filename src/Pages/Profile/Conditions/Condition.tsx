@@ -21,11 +21,14 @@ export const Condition = () => {
       <div>
         <Swiper
           modules={[Pagination]}
-          spaceBetween={30}
+          spaceBetween={5}
           slidesPerView={1}
           breakpoints={{
-            1280: { slidesPerView: 3 }, // Ekranga mos ravishda joylashadi
-            960: { slidesPerView: 2 },
+            1920: { slidesPerView: 3 },
+            1440: { slidesPerView: 3 },
+            1190: { slidesPerView: 2 },
+            1024: { slidesPerView: 1 },
+            769: { slidesPerView: 2 },
             768: { slidesPerView: 1 },
             0: { slidesPerView: "auto" },
           }}
