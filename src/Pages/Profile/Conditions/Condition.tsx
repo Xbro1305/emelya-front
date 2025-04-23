@@ -1,5 +1,4 @@
 import styles from "./Condition.module.scss";
-import { useEffect, useState } from "react";
 import "swiper/swiper-bundle.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
