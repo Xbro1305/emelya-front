@@ -17,7 +17,7 @@ export const Header = () => {
   const [logoSize, setLogoSize] = useState(120);
   const [isOpen, setIsOpen] = useState(false);
   const [waiting, setWaiting] = useState(false);
-  const [investorModal, setInvestorModal] = useState<false | string>(false);
+  const [investorModal, setInvestorModal] = useState<false | string>("confirmLogin");
   const [surname, setSurname] = useState("");
   const [name, setName] = useState("");
   const [patronymic, setPatronymic] = useState("");
@@ -384,7 +384,7 @@ export const Header = () => {
               <label className={styles.investor_form_label}>
                 <p>Введите код из СМС:</p>
                 <PatternFormat
-                  format="### ###"
+                  format="####"
                   mask=" "
                   allowEmptyFormatting
                   className={styles.investor_form_code}
@@ -628,7 +628,7 @@ export const Header = () => {
               <label className={styles.investor_form_label}>
                 <p>Введите код из СМС:</p>
                 <PatternFormat
-                  format="### ###"
+                  format="####"
                   mask=" "
                   allowEmptyFormatting
                   className={styles.investor_form_code}
