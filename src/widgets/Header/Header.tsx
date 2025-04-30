@@ -17,7 +17,7 @@ export const Header = () => {
   const [logoSize, setLogoSize] = useState(120);
   const [isOpen, setIsOpen] = useState(false);
   const [waiting, setWaiting] = useState(false);
-  const [investorModal, setInvestorModal] = useState<false | string>("confirmLogin");
+  const [investorModal, setInvestorModal] = useState<false | string>(false);
   const [surname, setSurname] = useState("");
   const [name, setName] = useState("");
   const [patronymic, setPatronymic] = useState("");
@@ -366,7 +366,10 @@ export const Header = () => {
                   `${import.meta.env.VITE_APP_API_URL}/auth/confirm-register`,
                   {
                     method: "POST",
-                    data: { phone, code: code.trim() },
+                    data: {
+                      phone: phone.replace(/\s+/g, ""),
+                      code: code.trim(),
+                    },
                   }
                 )
                   .then(() => {
@@ -409,7 +412,7 @@ export const Header = () => {
                     `${import.meta.env.VITE_APP_API_URL}/auth/request-register`,
                     {
                       method: "POST",
-                      data: { phone },
+                      data: { phone: phone.replace(/\s+/g, "") },
                     }
                   )
                     .then(() => {
@@ -535,7 +538,7 @@ export const Header = () => {
                   `${import.meta.env.VITE_APP_API_URL}/auth/request-login`,
                   {
                     method: "POST",
-                    data: { phone },
+                    data: { phone: phone.replace(/\s+/g, "") },
                   }
                 )
                   .then(() => {
@@ -610,7 +613,10 @@ export const Header = () => {
                   `${import.meta.env.VITE_APP_API_URL}/auth/confirm-login`,
                   {
                     method: "POST",
-                    data: { phone, code: code.trim() },
+                    data: {
+                      phone: phone.replace(/\s+/g, ""),
+                      code: code.trim(),
+                    },
                   }
                 )
                   .then(() => {
@@ -653,7 +659,7 @@ export const Header = () => {
                     `${import.meta.env.VITE_APP_API_URL}/auth/request-login`,
                     {
                       method: "POST",
-                      data: { phone },
+                      data: { phone: phone.replace(/\s+/g, "") },
                     }
                   )
                     .then(() => {
