@@ -475,7 +475,7 @@ export const Header = () => {
               className={styles.investor_form}
             >
               <label className={styles.investor_form_label}>
-                <p>Телефон или email:</p>
+                <p>Логин</p>
                 <input
                   type="text"
                   value={login}
