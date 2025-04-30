@@ -366,7 +366,7 @@ export const Header = () => {
                   `${import.meta.env.VITE_APP_API_URL}/auth/confirm-register`,
                   {
                     method: "POST",
-                    data: { phone, code },
+                    data: { phone, code: code.trim() },
                   }
                 )
                   .then(() => {
@@ -610,7 +610,7 @@ export const Header = () => {
                   `${import.meta.env.VITE_APP_API_URL}/auth/confirm-login`,
                   {
                     method: "POST",
-                    data: { phone, code },
+                    data: { phone, code: code.trim() },
                   }
                 )
                   .then(() => {
