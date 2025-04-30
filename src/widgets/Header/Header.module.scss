@@ -358,6 +358,10 @@
   justify-content: center;
   gap: 20px;
 
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   &_body {
     display: flex;
     flex-direction: column;
@@ -371,6 +375,8 @@
     );
     border: 1px solid #b47427;
     position: relative;
+    max-height: 100%;
+    overflow: auto;
   }
 
   &_title {
@@ -398,6 +404,19 @@
     }
   }
 
+  &_link {
+    text-align: center;
+    color: white;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-decoration: dotted underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+
   &_form {
     display: flex;
     flex-direction: column;
@@ -406,6 +425,7 @@
 
     &_label {
       display: flex;
+      position: relative;
       flex-direction: column;
       gap: 5px;
 
@@ -438,6 +458,15 @@
         color: white;
         width: 300px;
       }
+    }
+
+    &_showPassword {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      color: #efb861 !important;
+      font-size: large !important;
+      cursor: pointer;
     }
 
     &_confirm {
@@ -543,6 +572,67 @@
         );
         cursor: not-allowed;
       }
+    }
+  }
+
+  &_changePhone {
+    width: 300px;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 135%;
+    text-align: center;
+    color: #efb86170;
+
+    span {
+      color: #efb861;
+      cursor: pointer;
+    }
+  }
+
+  &_getAgain {
+    background: linear-gradient(
+      246.28deg,
+      rgba(180, 116, 39, 0.1) -17.22%,
+      rgba(239, 184, 97, 0.1) 39.48%,
+      rgba(198, 119, 50, 0.1) 98.49%
+    ) !important;
+    color: #efb861 !important;
+  }
+
+  &_selecttLoginType {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(
+      246.28deg,
+      rgba(180, 116, 39, 0.1) -17.22%,
+      rgba(239, 184, 97, 0.1) 39.48%,
+      rgba(198, 119, 50, 0.1) 98.49%
+    );
+    border-radius: 8px;
+    overflow: hidden;
+    height: 45px;
+
+    div {
+      height: 45px;
+      color: #5a432e;
+      width: 50%;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    &_active {
+      border: 1px solid #efb861;
+      background: linear-gradient(
+        246.28deg,
+        rgba(180, 116, 39, 0.4) -17.22%,
+        rgba(239, 184, 97, 0.4) 39.48%,
+        rgba(198, 119, 50, 0.4) 98.49%
+      );
+      color: #fbca71 !important;
     }
   }
 }

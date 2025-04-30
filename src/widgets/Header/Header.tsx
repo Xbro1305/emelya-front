@@ -9,17 +9,23 @@ import logo2 from "../../assets/Vectorheader-2.svg";
 import { IoMdClose } from "react-icons/io";
 import { PatternFormat } from "react-number-format";
 import { PATHS } from "../../App";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
 
 export const Header = () => {
   const [logoSize, setLogoSize] = useState(120);
   const [isOpen, setIsOpen] = useState(false);
-  const [isInvestorModalOpen, setIsInvestorModalOpen] = useState(false);
+  const [investorModal, setInvestorModal] = useState<false | string>(false);
   const [surname, setSurname] = useState("");
   const [name, setName] = useState("");
   const [patronymic, setPatronymic] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [confirm, setConfirm] = useState(false);
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [code, setCode] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -83,7 +89,7 @@ export const Header = () => {
           >
             {" "}
             <Link
-              onClick={() => setIsInvestorModalOpen(true)}
+              onClick={() => setInvestorModal("loginBySMS")}
               className={styles.header_forInvestors}
               to={localStorage.getItem("token") ? "/profile" : "#"}
             >
@@ -92,7 +98,7 @@ export const Header = () => {
             <Link
               className={styles.header_login}
               to={localStorage.getItem("token") ? "/profile" : "#"}
-              onClick={() => setIsInvestorModalOpen(true)}
+              onClick={() => setInvestorModal("loginBySMS")}
             >
               Войти
             </Link>
@@ -101,7 +107,7 @@ export const Header = () => {
             <Link
               className={styles.header_login}
               to={localStorage.getItem("token") ? "/profile" : "#"}
-              onClick={() => setIsInvestorModalOpen(true)}
+              onClick={() => setInvestorModal("loginBySMS")}
             >
               <img src={logo1} alt="" />
             </Link>{" "}
@@ -111,7 +117,7 @@ export const Header = () => {
             <Link
               className={styles.header_login}
               to={localStorage.getItem("token") ? "/profile" : "#"}
-              onClick={() => setIsInvestorModalOpen(true)}
+              onClick={() => setInvestorModal("loginBySMS")}
             >
               <img src={key} alt="" />
             </Link>
@@ -139,7 +145,7 @@ export const Header = () => {
         <Link
           className={styles.header_login}
           to={localStorage.getItem("token") ? "/profile" : "#"}
-          onClick={() => setIsInvestorModalOpen(true)}
+          onClick={() => setInvestorModal("loginBySMS")}
         >
           <img src={logo1} alt="" />
         </Link>{" "}
@@ -149,7 +155,7 @@ export const Header = () => {
         <Link
           className={styles.header_login}
           to={localStorage.getItem("token") ? "/profile" : "#"}
-          onClick={() => setIsInvestorModalOpen(true)}
+          onClick={() => setInvestorModal("loginBySMS")}
         >
           <img src={key} alt="" />
         </Link>
@@ -200,27 +206,50 @@ export const Header = () => {
         </div>
       )}
 
-      {isInvestorModalOpen && (
+      {/*
+      
+      
+      
+      
+        Modals
+      
+      
+      
+      
+      
+      
+      */}
+      {investorModal == "register" && (
         <div className={styles.investor}>
           <div className={styles.investor_body}>
             <h1 className={styles.investor_title}>Регистрация</h1>
             <button
               className={styles.investor_closeButton}
-              onClick={() => setIsInvestorModalOpen(false)}
+              onClick={() => setInvestorModal(false)}
             >
               <IoMdClose style={{ width: "100%", height: "100%" }} />
             </button>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                setIsInvestorModalOpen(false);
-                localStorage.setItem(
-                  "data",
-                  JSON.stringify({ surname, name, patronymic, email, phone })
-                );
-                localStorage.setItem("profileType", "investor");
-                localStorage.setItem("token", "investor");
-                navigate("/profile");
+                axios(
+                  `${import.meta.env.VITE_APP_API_URL}/auth/request-register`,
+                  {
+                    method: "POST",
+                    data: {
+                      last_name: surname,
+                      first_name: name,
+                      patronymic,
+                      email,
+                      phone,
+                    },
+                  }
+                )
+                  .then(() => {
+                    setInvestorModal("confirmRegister");
+                  })
+                  .catch((err) => console.log(err));
+                // setInvestorModal(false);
               }}
               className={styles.investor_form}
             >
@@ -294,15 +323,326 @@ export const Header = () => {
               >
                 Продолжить
               </button>
+              <p
+                className={styles.investor_link}
+                onClick={() => setInvestorModal("loginBySMS")}
+              >
+                ВОЙТИ
+              </p>
               <label className={styles.investor_form_confirm}>
                 <p>
-                  {" "}
                   Нажимая кнопку, я соглашаюсь с условиями{" "}
                   <a href="/">Политики конфиденциальности</a> , за исключением
                   связанных с рекламой условий, которые действуют только при
                   даче согласия на рекламу
                 </p>
               </label>
+            </form>
+          </div>
+        </div>
+      )}
+      {investorModal == "confirmRegister" && (
+        <div className={styles.investor}>
+          <div className={styles.investor_body}>
+            <h1 className={styles.investor_title}>Регистрация</h1>
+            <button
+              className={styles.investor_closeButton}
+              onClick={() => setInvestorModal(false)}
+            >
+              <IoMdClose style={{ width: "100%", height: "100%" }} />
+            </button>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                axios(
+                  `${import.meta.env.VITE_APP_API_URL}/auth/confirm-register`,
+                  {
+                    method: "POST",
+                    data: { phone, code },
+                  }
+                )
+                  .then(() => {
+                    setInvestorModal(false);
+                    localStorage.setItem("token", "investor");
+                    navigate("/profile");
+                  })
+                  .catch((err) => console.log(err));
+              }}
+              className={styles.investor_form}
+            >
+              <label className={styles.investor_form_label}>
+                <p>Введите код из СМС:</p>
+                <PatternFormat
+                  format="### ###"
+                  mask=" "
+                  allowEmptyFormatting
+                  className={styles.investor_form_code}
+                  type="tel"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                />
+                <span>
+                  Код отправлен на номер{" "}
+                  <PatternFormat
+                    displayType="text"
+                    format="+7 (###) ### ## ##"
+                    value={phone}
+                  />
+                </span>
+              </label>
+              <button type="submit">Подтвердить</button>
+              <button
+                onClick={() => {
+                  axios(
+                    `${import.meta.env.VITE_APP_API_URL}/auth/request-register`,
+                    {
+                      method: "POST",
+                      data: { phone },
+                    }
+                  )
+                    .then(() => {
+                      setInvestorModal("confirmRegister");
+                    })
+                    .catch((err) => console.log(err));
+                }}
+                className={styles.investor_getAgain}
+              >
+                Отправить код еще раз
+              </button>
+              <p className={styles.investor_changePhone}>
+                Не приходит код? Проверьте правильность номера телефона.
+                <span onClick={() => setInvestorModal("register")}>
+                  Изменить номер
+                </span>
+              </p>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {investorModal == "loginByCreds" && (
+        <div className={styles.investor}>
+          <div className={styles.investor_body}>
+            <h1 className={styles.investor_title}>Вход в личный кабинет</h1>
+            <div className={styles.investor_selecttLoginType}>
+              <div onClick={() => setInvestorModal("loginBySMS")}>СМС-код</div>
+              <div className={styles.investor_selecttLoginType_active}>
+                Логин и пароль
+              </div>
+            </div>
+            <button
+              className={styles.investor_closeButton}
+              onClick={() => setInvestorModal(false)}
+            >
+              <IoMdClose style={{ width: "100%", height: "100%" }} />
+            </button>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                axios(
+                  `${import.meta.env.VITE_APP_API_URL}/auth/login-by-creds`,
+                  {
+                    method: "POST",
+                    data: { login, password },
+                  }
+                )
+                  .then(() => {
+                    setInvestorModal(false);
+                    localStorage.setItem("token", "investor");
+                    navigate("/profile");
+                  })
+                  .catch((err) => console.log(err));
+              }}
+              className={styles.investor_form}
+            >
+              <label className={styles.investor_form_label}>
+                <p>Телефон или email:</p>
+                <input
+                  type="text"
+                  value={login}
+                  onChange={(e) => setLogin(e.target.value)}
+                />
+              </label>
+              <label className={styles.investor_form_label}>
+                <p>Пароль:</p>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <span
+                  onClick={() => setShowPassword(!showPassword)}
+                  className={styles.investor_form_showPassword}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </label>
+              <button disabled={!login || !password} type="submit">
+                Войти
+              </button>
+              <p
+                className={styles.investor_link}
+                onClick={() => setInvestorModal("register")}
+              >
+                ЗАРЕГИСТРИРОВАТЬСЯ
+              </p>
+            </form>
+          </div>
+        </div>
+      )}
+      {investorModal == "loginBySMS" && (
+        <div className={styles.investor}>
+          <div className={styles.investor_body}>
+            <h1 className={styles.investor_title}>Вход в личный кабинет</h1>
+            <div className={styles.investor_selecttLoginType}>
+              <div className={styles.investor_selecttLoginType_active}>
+                СМС-код
+              </div>
+              <div onClick={() => setInvestorModal("loginByCreds")}>
+                Логин и пароль
+              </div>
+            </div>
+            <button
+              className={styles.investor_closeButton}
+              onClick={() => setInvestorModal(false)}
+            >
+              <IoMdClose style={{ width: "100%", height: "100%" }} />
+            </button>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                axios(
+                  `${import.meta.env.VITE_APP_API_URL}/auth/request-login`,
+                  {
+                    method: "POST",
+                    data: { phone },
+                  }
+                )
+                  .then(() => {
+                    setInvestorModal("confirmLogin");
+                  })
+                  .catch((err) => console.log(err));
+              }}
+              className={styles.investor_form}
+            >
+              <label className={styles.investor_form_label}>
+                <p>Телефон:</p>
+                <PatternFormat
+                  format="+7 ### ### ## ##"
+                  mask=" "
+                  allowEmptyFormatting
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+                <span
+                  style={{
+                    textAlign: "center",
+                    width: "300px",
+                  }}
+                >
+                  Введите номер мобильного телефона, который Вы указали при
+                  регистрации
+                </span>
+              </label>
+              <button
+                disabled={phone.trim().split(" ").join("").length != 12}
+                type="submit"
+              >
+                Войти
+              </button>
+              <p
+                className={styles.investor_link}
+                onClick={() => setInvestorModal("register")}
+              >
+                ЗАРЕГИСТРИРОВАТСЯ
+              </p>
+            </form>
+          </div>
+        </div>
+      )}
+      {investorModal == "confirmLogin" && (
+        <div className={styles.investor}>
+          <div className={styles.investor_body}>
+            <h1 className={styles.investor_title}>Вход в личный кабинет</h1>
+            <div className={styles.investor_selecttLoginType}>
+              <div className={styles.investor_selecttLoginType_active}>
+                СМС-код
+              </div>
+              <div onClick={() => setInvestorModal("loginByCreds")}>
+                Логин и пароль
+              </div>
+            </div>
+            <button
+              className={styles.investor_closeButton}
+              onClick={() => setInvestorModal(false)}
+            >
+              <IoMdClose style={{ width: "100%", height: "100%" }} />
+            </button>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                axios(
+                  `${import.meta.env.VITE_APP_API_URL}/auth/confirm-login`,
+                  {
+                    method: "POST",
+                    data: { phone, code },
+                  }
+                )
+                  .then(() => {
+                    setInvestorModal(false);
+                    localStorage.setItem("token", "investor");
+                    navigate("/profile");
+                  })
+                  .catch((err) => console.log(err));
+              }}
+              className={styles.investor_form}
+            >
+              <label className={styles.investor_form_label}>
+                <p>Введите код из СМС:</p>
+                <PatternFormat
+                  format="### ###"
+                  mask=" "
+                  allowEmptyFormatting
+                  className={styles.investor_form_code}
+                  type="tel"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                />
+                <span>
+                  Код отправлен на номер{" "}
+                  <PatternFormat
+                    displayType="text"
+                    format="+7 (###) ### ## ##"
+                    value={phone}
+                  />
+                </span>
+              </label>
+              <button type="submit">Подтвердить</button>
+              <button
+                onClick={() => {
+                  axios(
+                    `${import.meta.env.VITE_APP_API_URL}/auth/request-login`,
+                    {
+                      method: "POST",
+                      data: { phone },
+                    }
+                  )
+                    .then(() => {
+                      setInvestorModal("confirmLogin");
+                    })
+                    .catch((err) => console.log(err));
+                }}
+                className={styles.investor_getAgain}
+              >
+                Отправить код еще раз
+              </button>
+              <p className={styles.investor_changePhone}>
+                Не приходит код? Проверьте правильность номера телефона.
+                <span onClick={() => setInvestorModal("register")}>
+                  Изменить номер
+                </span>
+              </p>
             </form>
           </div>
         </div>
