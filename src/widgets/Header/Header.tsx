@@ -11,10 +11,12 @@ import { PatternFormat } from "react-number-format";
 import { PATHS } from "../../App";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
+import { Loading } from "../Loading/Loading";
 
 export const Header = () => {
   const [logoSize, setLogoSize] = useState(120);
   const [isOpen, setIsOpen] = useState(false);
+  const [waiting, setWaiting] = useState(false);
   const [investorModal, setInvestorModal] = useState<false | string>(false);
   const [surname, setSurname] = useState("");
   const [name, setName] = useState("");
@@ -40,6 +42,7 @@ export const Header = () => {
   }, []);
   return (
     <>
+      {waiting && <Loading />}
       <header className={styles.header}>
         <Link to={PATHS.HOME} className={styles.header_logo}>
           <img
@@ -232,6 +235,7 @@ export const Header = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
+                setWaiting(true);
                 axios(
                   `${import.meta.env.VITE_APP_API_URL}/auth/request-register`,
                   {
@@ -248,7 +252,10 @@ export const Header = () => {
                   .then(() => {
                     setInvestorModal("confirmRegister");
                   })
-                  .catch((err) => console.log(err));
+                  .catch((err) => console.log(err))
+                  .finally(() => {
+                    setWaiting(false);
+                  });
                 // setInvestorModal(false);
               }}
               className={styles.investor_form}
@@ -354,6 +361,7 @@ export const Header = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
+                setWaiting(true);
                 axios(
                   `${import.meta.env.VITE_APP_API_URL}/auth/confirm-register`,
                   {
@@ -366,7 +374,10 @@ export const Header = () => {
                     localStorage.setItem("token", "investor");
                     navigate("/profile");
                   })
-                  .catch((err) => console.log(err));
+                  .catch((err) => console.log(err))
+                  .finally(() => {
+                    setWaiting(false);
+                  });
               }}
               className={styles.investor_form}
             >
@@ -393,6 +404,7 @@ export const Header = () => {
               <button type="submit">Подтвердить</button>
               <button
                 onClick={() => {
+                  setWaiting(true);
                   axios(
                     `${import.meta.env.VITE_APP_API_URL}/auth/request-register`,
                     {
@@ -403,7 +415,10 @@ export const Header = () => {
                     .then(() => {
                       setInvestorModal("confirmRegister");
                     })
-                    .catch((err) => console.log(err));
+                    .catch((err) => console.log(err))
+                    .finally(() => {
+                      setWaiting(false);
+                    });
                 }}
                 className={styles.investor_getAgain}
               >
@@ -439,6 +454,7 @@ export const Header = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
+                setWaiting(true);
                 axios(
                   `${import.meta.env.VITE_APP_API_URL}/auth/login-by-creds`,
                   {
@@ -451,7 +467,10 @@ export const Header = () => {
                     localStorage.setItem("token", "investor");
                     navigate("/profile");
                   })
-                  .catch((err) => console.log(err));
+                  .catch((err) => console.log(err))
+                  .finally(() => {
+                    setWaiting(false);
+                  });
               }}
               className={styles.investor_form}
             >
@@ -511,6 +530,7 @@ export const Header = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
+                setWaiting(true);
                 axios(
                   `${import.meta.env.VITE_APP_API_URL}/auth/request-login`,
                   {
@@ -521,7 +541,10 @@ export const Header = () => {
                   .then(() => {
                     setInvestorModal("confirmLogin");
                   })
-                  .catch((err) => console.log(err));
+                  .catch((err) => console.log(err))
+                  .finally(() => {
+                    setWaiting(false);
+                  });
               }}
               className={styles.investor_form}
             >
@@ -582,6 +605,7 @@ export const Header = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
+                setWaiting(true);
                 axios(
                   `${import.meta.env.VITE_APP_API_URL}/auth/confirm-login`,
                   {
@@ -594,7 +618,10 @@ export const Header = () => {
                     localStorage.setItem("token", "investor");
                     navigate("/profile");
                   })
-                  .catch((err) => console.log(err));
+                  .catch((err) => console.log(err))
+                  .finally(() => {
+                    setWaiting(false);
+                  });
               }}
               className={styles.investor_form}
             >
@@ -621,6 +648,7 @@ export const Header = () => {
               <button type="submit">Подтвердить</button>
               <button
                 onClick={() => {
+                  setWaiting(true);
                   axios(
                     `${import.meta.env.VITE_APP_API_URL}/auth/request-login`,
                     {
@@ -631,7 +659,10 @@ export const Header = () => {
                     .then(() => {
                       setInvestorModal("confirmLogin");
                     })
-                    .catch((err) => console.log(err));
+                    .catch((err) => console.log(err))
+                    .finally(() => {
+                      setWaiting(false);
+                    });
                 }}
                 className={styles.investor_getAgain}
               >
