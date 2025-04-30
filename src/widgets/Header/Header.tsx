@@ -28,6 +28,9 @@ export const Header = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [code, setCode] = useState("");
+  const [creds, setCreds] = useState<
+    false | { password: string; login: string }
+  >(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -372,10 +375,12 @@ export const Header = () => {
                     },
                   }
                 )
-                  .then(() => {
-                    setInvestorModal(false);
-                    localStorage.setItem("token", "investor");
-                    navigate("/profile");
+                  .then((res) => {
+                    setInvestorModal("registered");
+                    setCreds({
+                      login: res.data.login,
+                      password: res.data.password,
+                    });
                   })
                   .catch((err) => console.log(err))
                   .finally(() => {
@@ -437,7 +442,31 @@ export const Header = () => {
           </div>
         </div>
       )}
-
+      {investorModal == "registered" && (
+        <div className={styles.investor}>
+          <div className={styles.investor_body}>
+            <h1 className={styles.investor_title}>Регистрация</h1>
+            <button
+              className={styles.investor_closeButton}
+              onClick={() => setInvestorModal(false)}
+            >
+              <IoMdClose style={{ width: "100%", height: "100%" }} />
+            </button>
+            <label className={styles.investor_form_label}>
+              <p>Вы успешно зарегистрировались!</p>
+              <br />
+              <p>Ваш логин - {creds && creds?.login}</p>
+              <br />
+              <p>Ваш пароль - {creds && creds?.password}</p>
+              <br />
+              <p>Они также отправлены вам по SMS!</p>
+            </label>
+            <Link className={styles.investor_link} to={"/profile"}>
+              Перейти в личный кабинет
+            </Link>
+          </div>
+        </div>
+      )}
       {investorModal == "loginByCreds" && (
         <div className={styles.investor}>
           <div className={styles.investor_body}>
