@@ -87,7 +87,7 @@ input:focus-visible {
 
 .Toastify__toast,
 .Toastify {
-  z-index: 9999999;
+  z-index: 999999999;
 }
 
 .Toastify {
