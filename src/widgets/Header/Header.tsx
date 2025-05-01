@@ -385,6 +385,7 @@ export const Header = () => {
                 )
                   .then((res) => {
                     setInvestorModal("registered");
+                    localStorage.setItem("token", "investor");
                     setCreds({
                       login: res.data.login,
                       password: res.data.password,
