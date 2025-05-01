@@ -12,10 +12,12 @@ import { MyInvestments } from "./Pages/Profile/MyInvestments/Investments";
 import { Calculator } from "./Pages/Profile/Calculator/Calculator";
 import { Operations } from "./Pages/Profile/Operations/Operations";
 import { Partners } from "./Pages/Profile/Partners/Partners";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         {RoutePath.map((route) => {
           return (

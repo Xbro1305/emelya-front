@@ -259,7 +259,7 @@ export const Header = () => {
                   .catch((err) => {
                     const errorMessage = err?.response?.data?.error || "Ошибка";
                     toast.error(errorMessage, {
-                      position: "top-right",
+                      position: "bottom-right",
                       autoClose: 5000,
                       hideProgressBar: false,
                     });
@@ -393,7 +393,7 @@ export const Header = () => {
                   .catch((err) => {
                     const errorMessage = err?.response?.data?.error || "Ошибка";
                     toast.error(errorMessage, {
-                      position: "top-right",
+                      position: "bottom-right",
                       autoClose: 5000,
                       hideProgressBar: false,
                     });
@@ -442,7 +442,7 @@ export const Header = () => {
                       const errorMessage =
                         err?.response?.data?.error || "Ошибка";
                       toast.error(errorMessage, {
-                        position: "top-right",
+                        position: "bottom-right",
                         autoClose: 5000,
                         hideProgressBar: false,
                         closeOnClick: true,
@@ -529,7 +529,7 @@ export const Header = () => {
                   .catch((err) => {
                     const errorMessage = err?.response?.data?.error || "Ошибка";
                     toast.error(errorMessage, {
-                      position: "top-right",
+                      position: "bottom-right",
                       autoClose: 5000,
                       hideProgressBar: false,
                     });
@@ -610,7 +610,7 @@ export const Header = () => {
                   .catch((err) => {
                     const errorMessage = err?.response?.data?.error || "Ошибка";
                     toast.error(errorMessage, {
-                      position: "top-right",
+                      position: "bottom-right",
                       autoClose: 5000,
                       hideProgressBar: false,
                     });
@@ -697,7 +697,7 @@ export const Header = () => {
                   .catch((err) => {
                     const errorMessage = err?.response?.data?.error || "Ошибка";
                     toast.error(errorMessage, {
-                      position: "top-right",
+                      position: "bottom-right",
                       autoClose: 5000,
                       hideProgressBar: false,
                     });
@@ -746,7 +746,7 @@ export const Header = () => {
                       const errorMessage =
                         err?.response?.data?.error || "Ошибка";
                       toast.error(errorMessage, {
-                        position: "top-right",
+                        position: "bottom-right",
                         autoClose: 5000,
                         hideProgressBar: false,
                         closeOnClick: true,
