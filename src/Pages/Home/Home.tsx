@@ -27,7 +27,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { PATHS } from "../../App";
-import { toast } from "react-toastify";
 
 interface Advantage {
   id: number;
