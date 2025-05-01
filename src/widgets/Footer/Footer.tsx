@@ -20,13 +20,13 @@ export const Footer = () => {
         </a>
         <section>
           <span>Мы в соцсетях:</span>
-          <Link to="/">
+          <Link to="https://t.me/emelyazaym">
             <img src={logo1} alt="" />
           </Link>
-          <Link to="/">
+          <Link to="https://vk.com/emelyazaym">
             <img src={logo2} alt="" />
           </Link>
-          <Link to="/">
+          <Link to="https://ok.ru/group/70000034587968">
             <img src={logo3} alt="" />
           </Link>
           <Link to="/">

@@ -193,13 +193,13 @@ const Header = ({
             <div>
               <section>
                 <span>Мы в соцсетях:</span>
-                <Link to="/">
+                <Link to="https://t.me/emelyazaym">
                   <img src={footerLogo1} alt="" />
                 </Link>
-                <Link to="/">
+                <Link to="https://vk.com/emelyazaym">
                   <img src={footerLogo2} alt="" />
                 </Link>
-                <Link to="/">
+                <Link to="https://ok.ru/group/70000034587968">
                   <img src={footerLogo3} alt="" />
                 </Link>
                 <Link to="/">
@@ -267,13 +267,13 @@ const Sidebar = ({
         <div>
           <section>
             <span>Мы в соцсетях:</span>
-            <Link to="/">
+            <Link to="https://t.me/emelyazaym">
               <img src={footerLogo1} alt="" />
             </Link>
-            <Link to="/">
+            <Link to="https://vk.com/emelyazaym">
               <img src={footerLogo2} alt="" />
             </Link>
-            <Link to="/">
+            <Link to="https://ok.ru/group/70000034587968">
               <img src={footerLogo3} alt="" />
             </Link>
             <Link to="/">
