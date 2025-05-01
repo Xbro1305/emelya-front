@@ -12,6 +12,7 @@ import { PATHS } from "../../App";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import { Loading } from "../Loading/Loading";
+import { toast } from "react-toastify";
 
 export const Header = () => {
   const [logoSize, setLogoSize] = useState(120);
@@ -255,7 +256,14 @@ export const Header = () => {
                   .then(() => {
                     setInvestorModal("confirmRegister");
                   })
-                  .catch((err) => console.log(err))
+                  .catch((err) => {
+                    const errorMessage = err?.response?.data?.error || "Ошибка";
+                    toast.error(errorMessage, {
+                      position: "top-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                    });
+                  })
                   .finally(() => {
                     setWaiting(false);
                   });
@@ -382,7 +390,14 @@ export const Header = () => {
                       password: res.data.password,
                     });
                   })
-                  .catch((err) => console.log(err))
+                  .catch((err) => {
+                    const errorMessage = err?.response?.data?.error || "Ошибка";
+                    toast.error(errorMessage, {
+                      position: "top-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                    });
+                  })
                   .finally(() => {
                     setWaiting(false);
                   });
@@ -423,7 +438,19 @@ export const Header = () => {
                     .then(() => {
                       setInvestorModal("confirmRegister");
                     })
-                    .catch((err) => console.log(err))
+                    .catch((err) => {
+                      const errorMessage =
+                        err?.response?.data?.error || "Ошибка";
+                      toast.error(errorMessage, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                      });
+                    })
                     .finally(() => {
                       setWaiting(false);
                     });
@@ -499,7 +526,14 @@ export const Header = () => {
                     localStorage.setItem("token", "investor");
                     navigate("/profile");
                   })
-                  .catch((err) => console.log(err))
+                  .catch((err) => {
+                    const errorMessage = err?.response?.data?.error || "Ошибка";
+                    toast.error(errorMessage, {
+                      position: "top-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                    });
+                  })
                   .finally(() => {
                     setWaiting(false);
                   });
@@ -573,7 +607,14 @@ export const Header = () => {
                   .then(() => {
                     setInvestorModal("confirmLogin");
                   })
-                  .catch((err) => console.log(err))
+                  .catch((err) => {
+                    const errorMessage = err?.response?.data?.error || "Ошибка";
+                    toast.error(errorMessage, {
+                      position: "top-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                    });
+                  })
                   .finally(() => {
                     setWaiting(false);
                   });
@@ -653,7 +694,14 @@ export const Header = () => {
                     localStorage.setItem("token", "investor");
                     navigate("/profile");
                   })
-                  .catch((err) => console.log(err))
+                  .catch((err) => {
+                    const errorMessage = err?.response?.data?.error || "Ошибка";
+                    toast.error(errorMessage, {
+                      position: "top-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                    });
+                  })
                   .finally(() => {
                     setWaiting(false);
                   });
@@ -694,7 +742,19 @@ export const Header = () => {
                     .then(() => {
                       setInvestorModal("confirmLogin");
                     })
-                    .catch((err) => console.log(err))
+                    .catch((err) => {
+                      const errorMessage =
+                        err?.response?.data?.error || "Ошибка";
+                      toast.error(errorMessage, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                      });
+                    })
                     .finally(() => {
                       setWaiting(false);
                     });
