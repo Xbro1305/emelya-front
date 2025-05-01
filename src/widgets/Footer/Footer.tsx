@@ -10,7 +10,9 @@ export const Footer = () => {
     <footer className={styles.footer}>
       <div>
         <span>
-          © ООО МКК "Гранат", <br /> ИНН 7733455259, ОГРН 1247700635478  
+          <Link to="https://www.cbr.ru/finorg/foinfo/?ogrn=1247700635478">
+            © ООО МКК "Гранат", <br /> ИНН 7733455259, ОГРН 1247700635478
+          </Link>
         </span>
         <span>125424, город Москва, Волоколамское ш, д. 108, помещ. 8ц</span>
       </div>

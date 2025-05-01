@@ -79,7 +79,7 @@ function App() {
 const ProfileNavigator = () => {
   const token = localStorage.getItem("token");
   if (!token) {
-    return <Navigate to={"/login"} />;
+    // return <Navigate to={"/login"} />;
   }
 
   const tokenType = localStorage.getItem("profileType");

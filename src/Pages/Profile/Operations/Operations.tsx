@@ -7,13 +7,13 @@ import { BiLogoMastercard, BiLogoVisa } from "react-icons/bi";
 export const Operations = () => {
   const [active, setActive] = useState<false | number>(false);
   const [isOpen, setIsOpen] = useState<false | number>(false);
-  const [limit, setLimit] = useState(15000);
+  const [limit, setLimit] = useState(0);
   const [sum, setSum] = useState<string>("0");
   const [payment, setPayment] = useState<false | string>(false);
   const [confirm, setConfirm] = useState(false);
 
   useEffect(() => {
-    setLimit(15000);
+    setLimit(0);
   }, []);
 
   return (
@@ -33,48 +33,63 @@ export const Operations = () => {
           <button onClick={() => setIsOpen(1)}>Поставить на вывод</button>
         </section>
       </div>
-      <div className={styles.operations_table}>
-        <div className={styles.operations_table_top}>
-          <p>Вид</p>
-          <p>Сумма</p>
-          <p>Время</p>
-          <p>Дата</p>
+
+      {data.length ? (
+        <div className={styles.operations_table}>
+          <div className={styles.operations_table_top}>
+            <p>Вид</p>
+            <p>Сумма</p>
+            <p>Время</p>
+            <p>Дата</p>
+          </div>
+          <div className={styles.operations_table_body}>
+            {data?.map(
+              (item: {
+                id: number;
+                type: string;
+                sum: string;
+                time: string;
+                date: string;
+              }) => (
+                <div
+                  onClick={() => setActive(active == item.id ? false : item.id)}
+                  key={item.id}
+                  className={styles.operations_table_item}
+                >
+                  <p className={styles.operations_table_item_p}>{item.type}</p>
+                  <p className={styles.operations_table_item_p}>{item.sum}</p>
+                  <p
+                    className={
+                      active == item.id ? styles.operations_table_item_p : ""
+                    }
+                  >
+                    {item.time}
+                  </p>
+                  <p
+                    className={
+                      active == item.id ? styles.operations_table_item_p : ""
+                    }
+                  >
+                    {item.date}
+                  </p>
+                  <span
+                    style={{
+                      transform:
+                        active == item.id ? "rotate(180deg)" : "rotate(0deg)",
+                    }}
+                  >
+                    <FaChevronDown />
+                  </span>
+                </div>
+              )
+            )}
+          </div>
         </div>
-        <div className={styles.operations_table_body}>
-          {data.map((item) => (
-            <div
-              onClick={() => setActive(active == item.id ? false : item.id)}
-              key={item.id}
-              className={styles.operations_table_item}
-            >
-              <p className={styles.operations_table_item_p}>{item.type}</p>
-              <p className={styles.operations_table_item_p}>{item.sum}</p>
-              <p
-                className={
-                  active == item.id ? styles.operations_table_item_p : ""
-                }
-              >
-                {item.time}
-              </p>
-              <p
-                className={
-                  active == item.id ? styles.operations_table_item_p : ""
-                }
-              >
-                {item.date}
-              </p>
-              <span
-                style={{
-                  transform:
-                    active == item.id ? "rotate(180deg)" : "rotate(0deg)",
-                }}
-              >
-                <FaChevronDown />
-              </span>
-            </div>
-          ))}
+      ) : (
+        <div>
+          <p>Нет данных</p>
         </div>
-      </div>
+      )}
       {isOpen == 1 && (
         <div className={styles.modal}>
           <div className={styles.modal_body}>
@@ -187,19 +202,27 @@ export const Operations = () => {
   );
 };
 
-const data = [
-  {
-    id: 1,
-    type: "Пополнение",
-    sum: "10 000 ₽",
-    time: "12:00",
-    date: "12.12.2023",
-  },
-  {
-    id: 2,
-    type: "Пополнение",
-    sum: "10 000 ₽",
-    time: "12:00",
-    date: "12.12.2023",
-  },
+const data:
+  | {
+      id: number;
+      type: string;
+      sum: string;
+      time: string;
+      date: string;
+    }
+  | any = [
+  // {
+  //   id: 1,
+  //   type: "Пополнение",
+  //   sum: "10 000 ₽",
+  //   time: "12:00",
+  //   date: "12.12.2023",
+  // },
+  // {
+  //   id: 2,
+  //   type: "Пополнение",
+  //   sum: "10 000 ₽",
+  //   time: "12:00",
+  //   date: "12.12.2023",
+  // },
 ];
