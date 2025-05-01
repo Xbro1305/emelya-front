@@ -21,11 +21,13 @@ import investBg from "../../assets/invest-bg.svg";
 import certificate from "../../assets/certificate.png";
 import { useState } from "react";
 import { NumericFormat } from "react-number-format";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "swiper/swiper-bundle.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import { BiMinus, BiPlus } from "react-icons/bi";
+import { PATHS } from "../../App";
+import { toast } from "react-toastify";
 
 interface Advantage {
   id: number;
@@ -68,6 +70,7 @@ export const Home = () => {
   const [term, setTerm] = useState(5);
   const [isPromoOpen, setIsPromoOpen] = useState(false);
   const [open, setOpen] = useState(0);
+  const navigate = useNavigate();
 
   const getTermLabel = (term: number): string => {
     const lastDigit = term % 10;
@@ -428,7 +431,26 @@ export const Home = () => {
             Тогда пройдите регистрацию, и узнайте обо всех преимуществах
             инвестиций с нами!
           </span>
-          <button>Инвестировать</button>
+          <button
+            onClick={() => {
+              if (localStorage.getItem("token")) {
+                navigate(PATHS.INVESTMENT_CONDITIONS);
+              } else {
+                navigate(PATHS.HOME);
+                toast.info("Для инвестирования необходимо зарегистрироваться", {
+                  position: "top-right",
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                });
+              }
+            }}
+          >
+            Инвестировать
+          </button>
         </div>
       </div>
       <div className={styles.home_certificates}>
