@@ -14,7 +14,7 @@ import axios from "axios";
 import { Loading } from "../Loading/Loading";
 import { toast } from "react-toastify";
 
-export const Header = () => {
+export const Header = ({ modal }: { modal?: string }) => {
   const [logoSize, setLogoSize] = useState(120);
   const [isOpen, setIsOpen] = useState(false);
   const [waiting, setWaiting] = useState(false);
@@ -33,6 +33,18 @@ export const Header = () => {
     false | { password: string; login: string }
   >(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (modal) {
+      setInvestorModal(modal);
+    }
+  }, [modal]);
+
+  useEffect(() => {
+    if (investorModal == false && modal) {
+      navigate(PATHS.HOME);
+    }
+  }, [investorModal]);
 
   useEffect(() => {
     const handleScroll = () => {

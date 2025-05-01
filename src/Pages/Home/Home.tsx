@@ -380,7 +380,7 @@ export const Home = () => {
                   <span>{item.term}</span>
                 </section>
                 <span>С возможностью пролонгации срока займа</span>
-                <button onClick={() => alert("l")}>Получить деньги</button>
+                <button>Получить деньги</button>
               </div>
             </SwiperSlide>
           ))}
@@ -431,26 +431,7 @@ export const Home = () => {
             Тогда пройдите регистрацию, и узнайте обо всех преимуществах
             инвестиций с нами!
           </span>
-          <button
-            onClick={() => {
-              if (localStorage.getItem("token")) {
-                navigate(PATHS.INVESTMENT_CONDITIONS);
-              } else {
-                navigate(PATHS.HOME);
-                toast.info("Для инвестирования необходимо зарегистрироваться", {
-                  position: "top-right",
-                  autoClose: 2000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                });
-              }
-            }}
-          >
-            Инвестировать
-          </button>
+          <button onClick={() => navigate(PATHS.PROFILE)}>Инвестировать</button>
         </div>
       </div>
       <div className={styles.home_certificates}>

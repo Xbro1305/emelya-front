@@ -60,6 +60,16 @@ function App() {
             </div>
           }
         />
+        <Route
+          path="/login"
+          element={
+            <>
+              <Header modal={"loginByCreds"} />
+              <Home />
+              <Footer />
+            </>
+          }
+        />
         <Route path={PATHS.PROFILE} element={<ProfileNavigator />} />
       </Routes>
     </BrowserRouter>
@@ -69,7 +79,7 @@ function App() {
 const ProfileNavigator = () => {
   const token = localStorage.getItem("token");
   if (!token) {
-    return <Navigate to={PATHS.HOME} />;
+    return <Navigate to={"/login"} />;
   }
 
   const tokenType = localStorage.getItem("profileType");

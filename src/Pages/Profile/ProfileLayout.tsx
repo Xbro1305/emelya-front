@@ -28,7 +28,7 @@ export const Profile = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (!token) {
-      navigate(PATHS.HOME);
+      navigate("/login");
     }
   }, [token, navigate]);
 

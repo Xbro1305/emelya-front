@@ -65,7 +65,7 @@ export const Condition = () => {
                     </section>
                   </div>
                 </div>
-                <button onClick={() => alert("l")}>Инвестировать</button>
+                <button>Инвестировать</button>
               </div>
             </SwiperSlide>
           ))}
