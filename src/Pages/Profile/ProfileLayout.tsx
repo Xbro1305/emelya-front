@@ -47,8 +47,8 @@ export const Profile = () => {
         if (res.data?.ID) {
           setId(res.data.ID);
         } else {
-          localStorage.removeItem("token");
-          navigate("/");
+          // localStorage.removeItem("token");
+          // navigate("/");
         }
       })
       .catch(() => {
