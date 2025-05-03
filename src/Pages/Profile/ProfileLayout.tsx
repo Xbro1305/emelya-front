@@ -1,5 +1,5 @@
 import styles from "./Profile.module.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import logo2 from "../../assets/Vectorheader-2.svg";
@@ -23,14 +23,8 @@ import { PATHS } from "../../App";
 export const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [expanded, setExpanded] = useState(true);
-  const token = localStorage.getItem("token");
 
   const navigate = useNavigate();
-  useEffect(() => {
-    if (!token) {
-      // navigate("/login");
-    }
-  }, [token, navigate]);
 
   return (
     <>
@@ -46,6 +40,7 @@ export const Profile = () => {
           style={{
             width: expanded ? "calc(100% - 330px)" : "calc(100% - 50px)",
             overflowY: "auto",
+            paddingBottom: "100px",
           }}
         >
           <Outlet />

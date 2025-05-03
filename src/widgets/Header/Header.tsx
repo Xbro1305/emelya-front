@@ -397,7 +397,7 @@ export const Header = ({ modal }: { modal?: string }) => {
                 )
                   .then((res) => {
                     setInvestorModal("registered");
-                    localStorage.setItem("token", "investor");
+                    localStorage.setItem("token", res.data.token);
                     setCreds({
                       login: res.data.login,
                       password: res.data.password,
@@ -432,7 +432,7 @@ export const Header = ({ modal }: { modal?: string }) => {
                   Код отправлен на номер{" "}
                   <PatternFormat
                     displayType="text"
-                    format="+7 (###) ### ## ##"
+                    format="+# (###) ### ## ##"
                     value={phone}
                   />
                 </span>
@@ -534,9 +534,9 @@ export const Header = ({ modal }: { modal?: string }) => {
                     data: { login, password },
                   }
                 )
-                  .then(() => {
+                  .then((res) => {
                     setInvestorModal(false);
-                    localStorage.setItem("token", "investor");
+                    localStorage.setItem("token", res.data.token);
                     navigate("/profile");
                   })
                   .catch((err) => {
@@ -702,9 +702,9 @@ export const Header = ({ modal }: { modal?: string }) => {
                     },
                   }
                 )
-                  .then(() => {
+                  .then((res) => {
                     setInvestorModal(false);
-                    localStorage.setItem("token", "investor");
+                    localStorage.setItem("token", res.data.token);
                     navigate("/profile");
                   })
                   .catch((err) => {
@@ -736,7 +736,7 @@ export const Header = ({ modal }: { modal?: string }) => {
                   Код отправлен на номер{" "}
                   <PatternFormat
                     displayType="text"
-                    format="+7 (###) ### ## ##"
+                    format="+# (###) ### ## ##"
                     value={phone}
                   />
                 </span>
