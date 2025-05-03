@@ -1,5 +1,5 @@
 import styles from "./Profile.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import logo2 from "../../assets/Vectorheader-2.svg";
@@ -19,17 +19,51 @@ import footerLogo4 from "../../assets/Subtract-footer_4.svg";
 import { FaChevronLeft } from "react-icons/fa";
 import { Outlet } from "react-router-dom";
 import { PATHS } from "../../App";
+import axios from "axios";
+import { Loading } from "../../widgets/Loading/Loading";
 
 export const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [expanded, setExpanded] = useState(true);
+  const [id, setId] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/");
+      return;
+    }
+    axios(`${import.meta.env.VITE_API_URL}/auth/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (res.data?.id) {
+          setId(res.data.id);
+        } else {
+          localStorage.removeItem("token");
+          navigate("/");
+        }
+      })
+      .catch(() => {
+        localStorage.removeItem("token");
+        navigate("/");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [token, navigate]);
 
   return (
     <>
+      {loading && <Loading />}
       <Header
         isOpen={isOpen}
+        id={id}
         setIsOpen={setIsOpen}
         navigate={(url) => navigate(url)}
       />
@@ -41,7 +75,7 @@ export const Profile = () => {
             width: expanded ? "calc(100% - 330px)" : "calc(100% - 50px)",
             overflowY: "auto",
             paddingBottom: "100px",
-            background:"black"
+            background: "black",
           }}
         >
           <Outlet />
@@ -53,10 +87,12 @@ export const Profile = () => {
 
 const Header = ({
   isOpen,
+  id,
   setIsOpen,
   navigate,
 }: {
   isOpen: boolean;
+  id: number;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   navigate: (url: string) => void;
 }) => {
@@ -79,7 +115,7 @@ const Header = ({
         </Link>
       </div>
       <div className={styles.header_right}>
-        <p>ID 89658345</p>
+        <p>ID {id}</p>
         <button
           onClick={() => {
             localStorage.removeItem("token");

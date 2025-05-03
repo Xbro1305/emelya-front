@@ -86,7 +86,7 @@ const ProfileNavigator = () => {
   if (tokenType == "investor")
     return <Navigate to={PATHS.INVESTMENT_CONDITIONS} />;
 
-  return <Navigate to={PATHS.MY_INVESTMENTS} />;
+  return <Navigate to={PATHS.INVESTMENT_CONDITIONS} />;
 };
 
 export const PATHS = {
