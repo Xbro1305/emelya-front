@@ -6,27 +6,25 @@ import { Loading } from "../../../widgets/Loading/Loading";
 
 export const PersData = () => {
   const [data, setData] = useState<{
-    email: string;
-    firstName: string;
+    Email: string;
+    FirstName: string;
     ID: number;
-    isEmailVerified: boolean;
-    isPhoneVerified: boolean;
-    lastName: string;
-    login: string;
-    passwordHash: string;
-    patronymic: string;
-    phone: string;
+    IsEmailVerified: boolean;
+    IsPhoneVerified: boolean;
+    LastName: string;
+    Login: string;
+    Patronymic: string;
+    Phone: string;
   }>({
-    email: "string",
-    firstName: "string",
-    ID: 0,
-    isEmailVerified: true,
-    isPhoneVerified: true,
-    lastName: "string",
-    login: "string",
-    passwordHash: "string",
-    patronymic: "string",
-    phone: "string",
+    Email: "vovayhh9988@gmail.com",
+    FirstName: "Иван",
+    ID: 32,
+    IsEmailVerified: false,
+    IsPhoneVerified: true,
+    LastName: "Иванов",
+    Login: "ILjusSpj",
+    Patronymic: "Иванович",
+    Phone: "+79831863268",
   });
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
@@ -48,15 +46,14 @@ export const PersData = () => {
     <>
       {loading && <Loading />}
       <div className={styles.persdata}>
-        <h1>Здравствуйте, {data?.firstName}!</h1>
-        <p>Имя: {data.firstName}</p>
-        <p>Фамилия: {data.lastName}</p>
-        <p>Отчество: {data.patronymic}</p>
-        <p>E-mail: {data.email}</p>
-        <p>Номер телефона: {data.phone}</p>
+        <h1>Здравствуйте, {data?.FirstName}!</h1>
+        <p>Имя: {data.FirstName}</p>
+        <p>Фамилия: {data.LastName}</p>
+        <p>Отчество: {data.Patronymic}</p>
+        <p>E-mail: {data.Email}</p>
+        <p>Номер телефона: {data.Phone}</p>
         <p>ID: {data.ID}</p>
-        <p>Логин: {data.login}</p>
-        <p>Пароль: {data.passwordHash}</p>
+        <p>Логин: {data.Login}</p>
       </div>
     </>
   );
