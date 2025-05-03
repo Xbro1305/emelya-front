@@ -36,7 +36,7 @@ export const Profile = () => {
       navigate("/");
       return;
     }
-    axios(`${import.meta.env.VITE_API_URL}/auth/me`, {
+    axios(`${import.meta.env.VITE_APP_API_URL}/auth/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
