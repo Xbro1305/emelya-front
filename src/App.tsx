@@ -13,6 +13,8 @@ import { Calculator } from "./Pages/Profile/Calculator/Calculator";
 import { Operations } from "./Pages/Profile/Operations/Operations";
 import { Partners } from "./Pages/Profile/Partners/Partners";
 import { ToastContainer } from "react-toastify";
+import { PersData } from "./Pages/Profile/PersData/Persdata";
+import { Details } from "./Pages/Profile/Detai;s/Details";
 
 function App() {
   return (
@@ -97,6 +99,8 @@ export const PATHS = {
   CALCULATOR: "/profile/calculator",
   OPERATIONS: "/profile/operations",
   PARTNERS: "/profile/partners",
+  PERS_DATA: "/profile/personal-data",
+  DETAILS: "/profile/details",
 };
 
 const RoutePath = [
@@ -133,6 +137,18 @@ const profilePath = [
     path: PATHS.PARTNERS,
     isHeader: false,
     element: <Partners />,
+  },
+  {
+    name: "persdata",
+    path: PATHS.PERS_DATA,
+    isHeader: false,
+    element: <PersData />,
+  },
+  {
+    name: "details",
+    path: PATHS.DETAILS,
+    isHeader: false,
+    element: <Details />,
   },
 ];
 

@@ -26,7 +26,7 @@ export const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [expanded, setExpanded] = useState(true);
   const [id, setId] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -190,14 +190,14 @@ const Header = ({
             </Link>
             <Link
               onClick={() => setTimeout(() => setIsOpen(false), 300)}
-              to={"#"}
+              to={PATHS.PERS_DATA}
             >
               <img src={burgerIcon6} alt="Личные данные" />
               Личные данные
             </Link>
             <Link
               onClick={() => setTimeout(() => setIsOpen(false), 300)}
-              to={"#"}
+              to={PATHS.DETAILS}
             >
               <img src={burgerIcon7} alt="Реквизиты" />
               Реквизиты
@@ -282,11 +282,11 @@ const Sidebar = ({
           <img src={burgerIcon5} alt="Мои партнеры" />
           <p>Мои партнеры</p>
         </Link>
-        <Link to={"#"}>
+        <Link to={PATHS.PERS_DATA}>
           <img src={burgerIcon6} alt="Личные данные" />
           <p>Личные данные</p>
         </Link>
-        <Link to={"#"}>
+        <Link to={PATHS.DETAILS}>
           <img src={burgerIcon7} alt="Реквизиты" />
           <p>Реквизиты</p>
         </Link>
