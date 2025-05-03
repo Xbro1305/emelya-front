@@ -41,6 +41,7 @@ export const Profile = () => {
             width: expanded ? "calc(100% - 330px)" : "calc(100% - 50px)",
             overflowY: "auto",
             paddingBottom: "100px",
+            background:"black"
           }}
         >
           <Outlet />
