@@ -42,8 +42,8 @@ export const Profile = () => {
       },
     })
       .then((res) => {
-        if (res.data?.id) {
-          setId(res.data.id);
+        if (res.data?.ID) {
+          setId(res.data.ID);
         } else {
           localStorage.removeItem("token");
           navigate("/");
