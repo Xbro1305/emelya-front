@@ -1,6 +1,8 @@
 import { NumericFormat } from "react-number-format";
 import styles from "./Calculator.module.scss";
 import { useEffect, useState } from "react";
+import QRCode from "react-qr-code";
+
 const tarifs = [
   {
     id: 1,
@@ -32,6 +34,7 @@ export const Calculator = () => {
   const [selectedTarif, setSelectedTarif] = useState(tarifs[0]);
   const [sum, setSum] = useState(selectedTarif.min);
   const id = new URLSearchParams(window.location.search).get("tarifId");
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     setSum(selectedTarif.min);
@@ -135,10 +138,26 @@ export const Calculator = () => {
             />
           </section>
         </div>
-        <button className={styles.calculator_right_getButton}>
+        <button
+          onClick={() => setIsOpen(true)}
+          className={styles.calculator_right_getButton}
+        >
           Инвестировать
         </button>
       </div>
+      {isOpen && (
+        <div className={styles.modal}>
+          <div className={styles.modal_body}>
+            <button onClick={() => setIsOpen(false)}>&times;</button>
+            <h1>Сканируй и оплати в приложении банка</h1>
+            <QRCode
+              value={`Transaction for ${sum}`}
+              bgColor="#2E1A00"
+              fgColor="#B47427"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

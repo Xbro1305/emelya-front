@@ -273,3 +273,53 @@
     padding: 20px;
   }
 }
+
+.modal {
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999999999;
+  background: #00000080;
+
+  &_body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border: 1px solid #efb861;
+    padding: 40px;
+    position: relative;
+    max-width: 440px;
+    width: 90%;
+    background: linear-gradient(
+      119.25deg,
+      rgba(46, 26, 0, 0.8) 25.28%,
+      rgba(0, 0, 0, 0.8) 98.75%
+    );
+    border-radius: 35px;
+    color: white;
+
+    h1 {
+      font-family: Forum;
+      font-weight: 400;
+      font-size: 32px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      text-align: center;
+    }
+
+    button {
+      color: #ffd076;
+      font-size: 32px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+  }
+}
