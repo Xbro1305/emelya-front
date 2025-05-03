@@ -38,13 +38,15 @@ export const Calculator = () => {
   }, [selectedTarif]);
 
   useEffect(() => {
-    if (id) {
-      const tarif = tarifs.find((tarif) => tarif.id === Number(id));
-      if (tarif) {
-        setSelectedTarif(tarif);
-        setSum(tarif.min);
+    setTimeout(() => {
+      if (id) {
+        const tarif = tarifs.find((tarif) => tarif.id === Number(id));
+        if (tarif) {
+          setSelectedTarif(tarif);
+          setSum(tarif.min);
+        }
       }
-    }
+    }, 300);
   }, [id]);
 
   return (
