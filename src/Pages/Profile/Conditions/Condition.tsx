@@ -5,8 +5,12 @@ import { Pagination } from "swiper/modules";
 import adv1 from "../../../assets/Vector-adv_1.svg";
 import adv2 from "../../../assets/Vector-adv_2.svg";
 import adv3 from "../../../assets/Vector-adv_3.svg";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../../App";
 
 export const Condition = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.condition}>
       <h1 className={styles.condition_title}>Условия инвестирования</h1>
@@ -65,7 +69,13 @@ export const Condition = () => {
                     </section>
                   </div>
                 </div>
-                <button>Инвестировать</button>
+                <button
+                  onClick={() =>
+                    navigate(`${PATHS.CALCULATOR}?tarifId=${item.id}`)
+                  }
+                >
+                  Инвестировать
+                </button>
               </div>
             </SwiperSlide>
           ))}

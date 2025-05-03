@@ -31,10 +31,21 @@ const tarifs = [
 export const Calculator = () => {
   const [selectedTarif, setSelectedTarif] = useState(tarifs[0]);
   const [sum, setSum] = useState(selectedTarif.min);
+  const id = new URLSearchParams(window.location.search).get("tarifId");
 
   useEffect(() => {
     setSum(selectedTarif.min);
   }, [selectedTarif]);
+
+  useEffect(() => {
+    if (id) {
+      const tarif = tarifs.find((tarif) => tarif.id === Number(id));
+      if (tarif) {
+        setSelectedTarif(tarif);
+        setSum(tarif.min);
+      }
+    }
+  }, [id]);
 
   return (
     <div className={styles.calculator}>

@@ -42,8 +42,6 @@ export const Profile = () => {
       },
     })
       .then((res) => {
-        console.log(res);
-
         if (res.data?.ID) {
           setId(res.data.ID);
         } else {
