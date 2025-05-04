@@ -33,7 +33,7 @@ export const Profile = () => {
 
   useEffect(() => {
     if (!token) {
-      // navigate("/");
+      navigate("/");
       return;
     }
     axios(`${import.meta.env.VITE_APP_API_URL}/auth/me`, {
