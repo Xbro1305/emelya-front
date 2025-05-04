@@ -3,6 +3,7 @@ import styles from "./PersData.module.scss";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Loading } from "../../../widgets/Loading/Loading";
+import { PatternFormat } from "react-number-format";
 
 export const PersData = () => {
   const [data, setData] = useState<{
@@ -24,7 +25,7 @@ export const PersData = () => {
     LastName: "Загрузка...",
     Login: "Загрузка...",
     Patronymic: "Загрузка...",
-    Phone: "Загрузка...",
+    Phone: "+79876543211",
   });
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
@@ -51,7 +52,14 @@ export const PersData = () => {
         <p>Фамилия: {data.LastName}</p>
         <p>Отчество: {data.Patronymic}</p>
         <p>E-mail: {data.Email}</p>
-        <p>Номер телефона: {data.Phone}</p>
+        <p>
+          Номер телефона:{" "}
+          <PatternFormat
+            displayType="text"
+            value={data.Phone}
+            format="+# (###) ###-##-##"
+          />
+        </p>
         <p>ID: {data.ID}</p>
         <p>Логин: {data.Login}</p>
       </div>
