@@ -16,15 +16,15 @@ export const PersData = () => {
     Patronymic: string;
     Phone: string;
   }>({
-    Email: "vovayhh9988@gmail.com",
-    FirstName: "Иван",
+    Email: "Загрузка...",
+    FirstName: "Загрузка...",
     ID: 32,
     IsEmailVerified: false,
     IsPhoneVerified: true,
-    LastName: "Иванов",
-    Login: "ILjusSpj",
-    Patronymic: "Иванович",
-    Phone: "+79831863268",
+    LastName: "Загрузка...",
+    Login: "Загрузка...",
+    Patronymic: "Загрузка...",
+    Phone: "Загрузка...",
   });
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");

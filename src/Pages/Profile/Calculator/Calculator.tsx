@@ -151,7 +151,7 @@ export const Calculator = () => {
             <button onClick={() => setIsOpen(false)}>&times;</button>
             <h1>Сканируй и оплати в приложении банка</h1>
             <QRCode
-              value={`Transaction for ${sum}`}
+              value={`https://qr.nspk.ru/AS2A002B19TA8GLK9AEAB6FSI5IP6S94?type=01&bank=100000000004&crc=F716`}
               bgColor="#2E1A00"
               fgColor="#B47427"
             />
