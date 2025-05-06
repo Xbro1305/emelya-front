@@ -2,6 +2,9 @@ import { NumericFormat } from "react-number-format";
 import styles from "./Calculator.module.scss";
 import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
+import axios from "axios";
+import { Loading } from "../../../widgets/Loading/Loading";
+import { toast } from "react-toastify";
 
 const tarifs = [
   {
@@ -33,8 +36,10 @@ const tarifs = [
 export const Calculator = () => {
   const [selectedTarif, setSelectedTarif] = useState(tarifs[0]);
   const [sum, setSum] = useState(selectedTarif.min);
-  const id = new URLSearchParams(window.location.search).get("tarifId");
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const id = new URLSearchParams(window.location.search).get("tarifId");
 
   useEffect(() => {
     setSum(selectedTarif.min);
@@ -54,6 +59,7 @@ export const Calculator = () => {
 
   return (
     <div className={styles.calculator}>
+      {loading && <Loading />}
       <div className={styles.calculator_right_content}>
         <div className={styles.calculator_right_tarifs}>
           {tarifs.map((tarif) => (
@@ -139,7 +145,25 @@ export const Calculator = () => {
           </section>
         </div>
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={() => {
+            const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+            setLoading(true);
+            axios(`${import.meta.env.VITE_APP_API_URL}/notify`, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+              data: {
+                data: `Пользователь ${user?.FirstName} (ID: ${user?.ID}) (Номер телефона: ${user?.Phone}) хочет инвестировать ${sum} ₽ по тарифу ${selectedTarif?.name}`,
+              },
+            })
+              .then(() => setIsOpen(true))
+              .catch(() =>
+                toast.error("Что-то пошло не так. Попробуйте заново попозже")
+              )
+              .finally(() => setLoading(false));
+          }}
           className={styles.calculator_right_getButton}
         >
           Инвестировать
