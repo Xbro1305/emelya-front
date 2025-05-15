@@ -155,7 +155,7 @@ export const Calculator = () => {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
               },
               data: {
-                data: `Пользователь ${user?.FirstName} (ID: ${user?.ID}) (Номер телефона: ${user?.Phone}) хочет инвестировать ${sum} ₽ по тарифу ${selectedTarif?.name}`,
+                text: `Пользователь ${user?.FirstName} (ID: ${user?.ID}) (Номер телефона: ${user?.Phone}) хочет инвестировать ${sum} ₽ по тарифу ${selectedTarif?.name}`,
               },
             })
               .then(() => setIsOpen(true))
