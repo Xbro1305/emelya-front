@@ -132,7 +132,7 @@ export const Calculator = () => {
         <div className={styles.calculator_right_info}>
           <section>
             <p>Доход за весь период</p> <span></span>
-            <span>{selectedTarif.percentPerDay * 360}%</span>
+            <span>{selectedTarif.percentPerDay * 300}%</span>
           </section>
           <section>
             <p>Вы получаете</p> <span></span>
