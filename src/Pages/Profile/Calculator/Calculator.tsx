@@ -153,6 +153,7 @@ export const Calculator = () => {
               method: "POST",
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json",
               },
               data: {
                 text: `Пользователь ${user?.FirstName} (ID: ${user?.ID}) (Номер телефона: ${user?.Phone}) хочет инвестировать ${sum} ₽ по тарифу ${selectedTarif?.name}`,
