@@ -8,10 +8,13 @@
     align-content: flex-end;
     gap: 30px;
     padding: 20px var(--sides-padding);
+    padding-top: 120px;
     justify-content: space-between;
     width: 100%;
     background: linear-gradient(119.25deg, #000000 37.11%, #683c00 98.75%);
     min-height: 100vh;
+    height: fit-content;
+
     &_left {
       display: flex;
       flex-direction: column;

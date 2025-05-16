@@ -14,7 +14,7 @@ import { Operations } from "./Pages/Profile/Operations/Operations";
 import { Partners } from "./Pages/Profile/Partners/Partners";
 import { ToastContainer } from "react-toastify";
 import { PersData } from "./Pages/Profile/PersData/Persdata";
-import { Details } from "./Pages/Profile/Detai;s/Details";
+import { Details } from "./Pages/Profile/Details/Details";
 
 function App() {
   return (
