@@ -240,7 +240,7 @@ export const Header = ({ modal }: { modal?: string }) => {
               className={styles.investor_closeButton}
               onClick={() => {
                 setInvestorModal(false);
-                window.location.pathname == "/login" && navigate("/");
+                window.location.pathname != "/" && navigate("/");
               }}
             >
               <IoMdClose style={{ width: "100%", height: "100%" }} />
@@ -396,7 +396,7 @@ export const Header = ({ modal }: { modal?: string }) => {
               className={styles.investor_closeButton}
               onClick={() => {
                 setInvestorModal(false);
-                window.location.pathname == "/login" && navigate("/");
+                window.location.pathname != "/" && navigate("/");
               }}
             >
               <IoMdClose style={{ width: "100%", height: "100%" }} />
@@ -510,7 +510,7 @@ export const Header = ({ modal }: { modal?: string }) => {
               className={styles.investor_closeButton}
               onClick={() => {
                 setInvestorModal(false);
-                window.location.pathname == "/login" && navigate("/");
+                window.location.pathname != "/" && navigate("/");
               }}
             >
               <IoMdClose style={{ width: "100%", height: "100%" }} />
@@ -544,7 +544,7 @@ export const Header = ({ modal }: { modal?: string }) => {
               className={styles.investor_closeButton}
               onClick={() => {
                 setInvestorModal(false);
-                window.location.pathname == "/login" && navigate("/");
+                window.location.pathname != "/" && navigate("/");
               }}
             >
               <IoMdClose style={{ width: "100%", height: "100%" }} />
@@ -630,7 +630,7 @@ export const Header = ({ modal }: { modal?: string }) => {
               className={styles.investor_closeButton}
               onClick={() => {
                 setInvestorModal(false);
-                window.location.pathname == "/login" && navigate("/");
+                window.location.pathname != "/" && navigate("/");
               }}
             >
               <IoMdClose style={{ width: "100%", height: "100%" }} />
@@ -715,7 +715,7 @@ export const Header = ({ modal }: { modal?: string }) => {
               className={styles.investor_closeButton}
               onClick={() => {
                 setInvestorModal(false);
-                window.location.pathname == "/login" && navigate("/");
+                window.location.pathname != "/" && navigate("/");
               }}
             >
               <IoMdClose style={{ width: "100%", height: "100%" }} />
