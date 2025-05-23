@@ -1,6 +1,9 @@
 import { FaChevronDown } from "react-icons/fa";
 import styles from "./Partners.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Loading } from "../../../widgets/Loading/Loading";
+import { toast } from "react-toastify";
 
 export const Partners = () => {
   const [secondChild, setSecondChild] = useState<number | false>(false);
@@ -12,20 +15,41 @@ export const Partners = () => {
   const [thirdChapter, setThirdChatper] = useState<"invests" | "referals">(
     "referals"
   );
+  const [id, setId] = useState<any>(null);
+  const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios(`${import.meta.env.VITE_APP_API_URL}/auth/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => setId(res.data.ID))
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [token]);
 
   return (
     <div className={styles.partners}>
+      {loading && <Loading />}
       <div className={styles.partners_top}>
         <h1 className={styles.partners_top_title}>Партнеры</h1>
         <section>
           <p>
             Пригласить партнера:
-            <span>https://emelia-invest.ru/767861 </span>
+            <span>https://emelia-invest.com/register?referrerId={id} </span>
           </p>
           <button
-            onClick={() =>
-              navigator.clipboard.writeText("https://emelia-invest.ru/767861")
-            }
+            onClick={() => {
+              navigator.clipboard.writeText(
+                `https://emelia-invest.com/register?referrerId=${id}`
+              );
+              toast.success("Ссылка скопирована");
+            }}
           >
             Копировать
           </button>

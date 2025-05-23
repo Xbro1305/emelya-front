@@ -41,12 +41,6 @@ export const Header = ({ modal }: { modal?: string }) => {
   }, [modal]);
 
   useEffect(() => {
-    if (investorModal == false && modal) {
-      navigate(PATHS.HOME);
-    }
-  }, [investorModal]);
-
-  useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const newSize = Math.max(80, 120 - (scrollTop / 100) * 10);
@@ -244,7 +238,10 @@ export const Header = ({ modal }: { modal?: string }) => {
             <h1 className={styles.investor_title}>Регистрация</h1>
             <button
               className={styles.investor_closeButton}
-              onClick={() => setInvestorModal(false)}
+              onClick={() => {
+                setInvestorModal(false);
+                window.location.pathname == "/login" && navigate("/");
+              }}
             >
               <IoMdClose style={{ width: "100%", height: "100%" }} />
             </button>
@@ -262,6 +259,10 @@ export const Header = ({ modal }: { modal?: string }) => {
                       patronymic,
                       email,
                       phone,
+                      referrerId:
+                        new URLSearchParams(window.location.search).get(
+                          "referrerId"
+                        ) || "",
                     },
                   }
                 )
@@ -393,7 +394,10 @@ export const Header = ({ modal }: { modal?: string }) => {
             <h1 className={styles.investor_title}>Регистрация</h1>
             <button
               className={styles.investor_closeButton}
-              onClick={() => setInvestorModal(false)}
+              onClick={() => {
+                setInvestorModal(false);
+                window.location.pathname == "/login" && navigate("/");
+              }}
             >
               <IoMdClose style={{ width: "100%", height: "100%" }} />
             </button>
@@ -504,7 +508,10 @@ export const Header = ({ modal }: { modal?: string }) => {
             <h1 className={styles.investor_title}>Регистрация</h1>
             <button
               className={styles.investor_closeButton}
-              onClick={() => setInvestorModal(false)}
+              onClick={() => {
+                setInvestorModal(false);
+                window.location.pathname == "/login" && navigate("/");
+              }}
             >
               <IoMdClose style={{ width: "100%", height: "100%" }} />
             </button>
@@ -535,7 +542,10 @@ export const Header = ({ modal }: { modal?: string }) => {
             </div>
             <button
               className={styles.investor_closeButton}
-              onClick={() => setInvestorModal(false)}
+              onClick={() => {
+                setInvestorModal(false);
+                window.location.pathname == "/login" && navigate("/");
+              }}
             >
               <IoMdClose style={{ width: "100%", height: "100%" }} />
             </button>
@@ -618,7 +628,10 @@ export const Header = ({ modal }: { modal?: string }) => {
             </div>
             <button
               className={styles.investor_closeButton}
-              onClick={() => setInvestorModal(false)}
+              onClick={() => {
+                setInvestorModal(false);
+                window.location.pathname == "/login" && navigate("/");
+              }}
             >
               <IoMdClose style={{ width: "100%", height: "100%" }} />
             </button>
@@ -700,7 +713,10 @@ export const Header = ({ modal }: { modal?: string }) => {
             </div>
             <button
               className={styles.investor_closeButton}
-              onClick={() => setInvestorModal(false)}
+              onClick={() => {
+                setInvestorModal(false);
+                window.location.pathname == "/login" && navigate("/");
+              }}
             >
               <IoMdClose style={{ width: "100%", height: "100%" }} />
             </button>

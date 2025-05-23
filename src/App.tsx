@@ -72,6 +72,16 @@ function App() {
             </>
           }
         />
+        <Route
+          path="/register"
+          element={
+            <>
+              <Header modal={"register"} />
+              <Home />
+              <Footer />
+            </>
+          }
+        />
         <Route path={PATHS.PROFILE} element={<ProfileNavigator />} />
       </Routes>
     </BrowserRouter>
