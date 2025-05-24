@@ -249,6 +249,12 @@ export const Header = ({ modal }: { modal?: string }) => {
               onSubmit={(e) => {
                 e.preventDefault();
                 setWaiting(true);
+                const referrerId =
+                  Number(
+                    new URLSearchParams(window.location.search).get(
+                      "referrerId"
+                    )
+                  ) || 0;
                 axios(
                   `${import.meta.env.VITE_APP_API_URL}/auth/request-register`,
                   {
@@ -259,10 +265,7 @@ export const Header = ({ modal }: { modal?: string }) => {
                       patronymic,
                       email,
                       phone,
-                      referrerId:
-                        new URLSearchParams(window.location.search).get(
-                          "referrerId"
-                        ) || "",
+                      referrerId,
                     },
                   }
                 )
