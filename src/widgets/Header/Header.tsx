@@ -255,18 +255,26 @@ export const Header = ({ modal }: { modal?: string }) => {
                       "referrerId"
                     )
                   ) || 0;
+                const data = {
+                  last_name: surname,
+                  first_name: name,
+                  patronymic,
+                  email,
+                  phone,
+                  referrerId,
+                };
+                if (referrerId == 0) {
+                  delete (data as { referrerId?: number }).referrerId;
+                }
+
                 axios(
                   `${import.meta.env.VITE_APP_API_URL}/auth/request-register`,
                   {
                     method: "POST",
-                    data: {
-                      last_name: surname,
-                      first_name: name,
-                      patronymic,
-                      email,
-                      phone,
-                      referrerId,
+                    headers: {
+                      "Content-Type": "application/json",
                     },
+                    data,
                   }
                 )
                   .then(() => {
