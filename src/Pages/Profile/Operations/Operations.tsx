@@ -183,15 +183,17 @@ export const Operations = () => {
               </label>
               <button
                 disabled={
-                  sum.split(" ₽").join(" ").split(" ").join("") == "0" ||
-                  sum.split(" ₽").join(" ").split(" ").join("") <= "100" ||
+                  Number(sum.replace(/\s+/g, "")) == 0 ||
+                  Number(sum.replace(/\s+/g, "")) <= 100 ||
                   payment == false
                 }
                 className={styles.modal_button}
                 onClick={() => {
+                  console.log(sum);
+
                   setLoading(true);
                   axios(
-                    `${import.meta.env.VITE_APP_API_URL}/user/request/withdraw`,
+                    `${import.meta.env.VITE_APP_API_URL}/user/request-withdraw`,
                     {
                       method: "POST",
                       headers: {
