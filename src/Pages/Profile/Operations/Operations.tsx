@@ -183,14 +183,12 @@ export const Operations = () => {
               </label>
               <button
                 disabled={
-                  Number(sum.replace(/\s+/g, "")) == 0 ||
-                  Number(sum.replace(/\s+/g, "")) <= 100 ||
+                  Number(sum.split(" ₽")[0].replace(/\s+/g, "")) == 0 ||
+                  Number(sum.split(" ₽")[0].replace(/\s+/g, "")) <= 100 ||
                   payment == false
                 }
                 className={styles.modal_button}
                 onClick={() => {
-                  console.log(sum);
-
                   setLoading(true);
                   axios(
                     `${import.meta.env.VITE_APP_API_URL}/user/request-withdraw`,
@@ -200,7 +198,7 @@ export const Operations = () => {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
                       },
-                      data: { amount: Number(sum.replace(/\s+/g, "")) },
+                      data: { amount: Number(sum.split(" ₽")[0].replace(/\s+/g, "")) },
                     }
                   )
                     .then(() => setConfirm(true))
