@@ -15,6 +15,7 @@ export const Operations = () => {
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [cardNumber, setCardNumber] = useState<string | null>(null);
+  const [card, setCard] = useState("");
 
   useEffect(() => {
     setLoading(!loading);
@@ -234,8 +235,31 @@ export const Operations = () => {
             </button>
             <label className={styles.modal_input_label}>
               <p>Номер карты:</p>
-              <PatternFormat format="#### #### #### ####" />
+              <PatternFormat
+                value={card}
+                onChange={(e) => setCard(e.target.value)}
+                format="#### #### #### ####"
+              />
             </label>
+            <button
+              className={styles.modal_button}
+              onClick={() => {
+                axios(
+                  `${import.meta.env.VITE_APP_API_URL}/user/update-profile`,
+                  {
+                    method: "POST",
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                      "Content-Type": "application/json",
+                    },
+                    data: { card_number: card },
+                  }
+                );
+              }}
+              type="submit"
+            >
+              Отправить
+            </button>
           </div>
         </div>
       )}
