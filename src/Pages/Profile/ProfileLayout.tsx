@@ -29,35 +29,35 @@ export const Profile = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/");
-      return;
-    }
-    axios(`${import.meta.env.VITE_APP_API_URL}/auth/me`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        if (res.data?.ID) {
-          setId(res.data.ID);
-          localStorage.setItem("user", JSON.stringify(res.data));
-        } else {
-          // localStorage.removeItem("token");
-          // navigate("/");
-        }
-      })
-      .catch(() => {
-        localStorage.removeItem("token");
-        navigate("/");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [token, navigate]);
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate("/");
+  //     return;
+  //   }
+  //   axios(`${import.meta.env.VITE_APP_API_URL}/auth/me`, {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       if (res.data?.ID) {
+  //         setId(res.data.ID);
+  //         localStorage.setItem("user", JSON.stringify(res.data));
+  //       } else {
+  //         // localStorage.removeItem("token");
+  //         // navigate("/");
+  //       }
+  //     })
+  //     .catch(() => {
+  //       localStorage.removeItem("token");
+  //       navigate("/");
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // }, [token, navigate]);
 
   return (
     <>

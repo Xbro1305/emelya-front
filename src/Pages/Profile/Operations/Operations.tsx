@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import styles from "./Operations.module.scss";
 import { FaChevronDown } from "react-icons/fa";
-import { NumericFormat } from "react-number-format";
-import { BiLogoMastercard, BiLogoVisa } from "react-icons/bi";
+import { NumericFormat, PatternFormat } from "react-number-format";
+import { BiCard, BiLogoMastercard, BiLogoVisa } from "react-icons/bi";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { IoMdCard } from "react-icons/io";
 
 export const Operations = () => {
   const [active, setActive] = useState<false | number>(false);
@@ -11,10 +14,37 @@ export const Operations = () => {
   const [sum, setSum] = useState<string>("0");
   const [payment, setPayment] = useState<false | string>(false);
   const [confirm, setConfirm] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [cardNumber, setCardNumber] = useState<string | null>(null);
 
   useEffect(() => {
     setLimit(0);
   }, []);
+
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    // if (!token) {
+    //   navigate("/");
+    //   return;
+    // }
+    axios(`${import.meta.env.VITE_APP_API_URL}/auth/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        setCardNumber(res.data.CardNumber);
+      })
+      .catch(() => {
+        // localStorage.removeItem("token");
+        // navigate("/");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [token, navigate]);
 
   return (
     <div className={styles.operations}>
@@ -125,29 +155,23 @@ export const Operations = () => {
               <label className={styles.modal_input_label}>
                 <p>Выберите способ получения:</p>
               </label>
-              <label className={styles.modal_payment_label}>
-                <p>
-                  <BiLogoVisa /> **5678
-                </p>
-                <input
-                  type="radio"
-                  onChange={() => setPayment("visa")}
-                  name="payment"
-                  value="visa"
-                />
-              </label>
-              <label className={styles.modal_payment_label}>
-                <p>
-                  <BiLogoMastercard /> **5138
-                </p>
-                <input
-                  type="radio"
-                  onChange={() => setPayment("mastercard")}
-                  name="payment"
-                  value="mastercard"
-                />
-              </label>
-              <label className={styles.modal_payment_label}>
+              {cardNumber && (
+                <label className={styles.modal_payment_label}>
+                  <p>
+                    <IoMdCard /> ****{cardNumber?.slice(12)}
+                  </p>
+                  <input
+                    type="radio"
+                    onChange={() => setPayment(cardNumber)}
+                    name="payment"
+                    value={cardNumber}
+                  />
+                </label>
+              )}
+              <label
+                onClick={() => setIsOpen(3)}
+                className={styles.modal_payment_label}
+              >
                 <p>Добавить карту</p>
                 <span>+</span>
               </label>
@@ -195,6 +219,23 @@ export const Operations = () => {
             <p style={{ textAlign: "center", maxWidth: "100%" }}>
               Деньги будут зачислены в течение 24 часов.
             </p>
+          </div>
+        </div>
+      )}
+      {isOpen == 3 && (
+        <div className={styles.modal}>
+          <div className={styles.modal_body}>
+            <h1 className={styles.modal_title}>Введите номер карты</h1>
+            <button
+              onClick={() => setIsOpen(false)}
+              className={styles.modal_closeButton}
+            >
+              &times;
+            </button>
+            <label className={styles.modal_input_label}>
+              <p>Номер карты:</p>
+              <PatternFormat format="#### #### #### ####" />
+            </label>
           </div>
         </div>
       )}
