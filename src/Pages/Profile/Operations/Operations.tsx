@@ -5,12 +5,14 @@ import { NumericFormat, PatternFormat } from "react-number-format";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { IoMdCard } from "react-icons/io";
+import { toast } from "react-toastify";
+import { Loading } from "../../../widgets/Loading/Loading";
 
 export const Operations = () => {
   const [active, setActive] = useState<false | number>(false);
   const [isOpen, setIsOpen] = useState<false | number>(false);
   const [limit, setLimit] = useState(0);
-  const [sum, setSum] = useState<string>("0");
+  const [sum, setSum] = useState<string>("");
   const [payment, setPayment] = useState<false | string>(false);
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -18,7 +20,6 @@ export const Operations = () => {
   const [card, setCard] = useState("");
 
   useEffect(() => {
-    setLoading(!loading);
     setLimit(0);
   }, []);
 
@@ -26,10 +27,6 @@ export const Operations = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    // if (!token) {
-    //   navigate("/");
-    //   return;
-    // }
     axios(`${import.meta.env.VITE_APP_API_URL}/auth/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -39,8 +36,7 @@ export const Operations = () => {
         setCardNumber(res.data.CardNumber);
       })
       .catch(() => {
-        // localStorage.removeItem("token");
-        // navigate("/");
+        toast.error("Что-то пошло не так");
       })
       .finally(() => {
         setLoading(false);
@@ -159,7 +155,7 @@ export const Operations = () => {
               {cardNumber && (
                 <label className={styles.modal_payment_label}>
                   <p>
-                    <IoMdCard /> ****{cardNumber?.slice(12)}
+                    <IoMdCard /> ****{cardNumber?.slice(15)}
                   </p>
                   <input
                     type="radio"
@@ -192,7 +188,23 @@ export const Operations = () => {
                   payment == false
                 }
                 className={styles.modal_button}
-                onClick={() => setConfirm(true)}
+                onClick={() => {
+                  setLoading(true);
+                  axios(
+                    `${import.meta.env.VITE_APP_API_URL}/user/request/withdraw`,
+                    {
+                      method: "POST",
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                      },
+                      data: { amount: Number(sum.replace(/\s+/g, "")) },
+                    }
+                  )
+                    .then(() => setConfirm(true))
+                    .catch(() => toast.error("Что-то пошло не так"))
+                    .finally(() => setLoading(false));
+                }}
                 type="submit"
               >
                 Отправить на вывод
@@ -244,6 +256,7 @@ export const Operations = () => {
             <button
               className={styles.modal_button}
               onClick={() => {
+                setLoading(true);
                 axios(
                   `${import.meta.env.VITE_APP_API_URL}/user/update-profile`,
                   {
@@ -254,7 +267,10 @@ export const Operations = () => {
                     },
                     data: { card_number: card },
                   }
-                );
+                )
+                  .then(() => toast.success("Успешно!"))
+                  .catch(() => toast.error("Что-то пошло не так"))
+                  .finally(() => setLoading(false));
               }}
               type="submit"
             >
@@ -263,6 +279,7 @@ export const Operations = () => {
           </div>
         </div>
       )}
+      {loading && <Loading />}
     </div>
   );
 };
