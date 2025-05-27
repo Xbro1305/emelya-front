@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import styles from "./Operations.module.scss";
 import { FaChevronDown } from "react-icons/fa";
 import { NumericFormat, PatternFormat } from "react-number-format";
-import { BiCard, BiLogoMastercard, BiLogoVisa } from "react-icons/bi";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { IoMdCard } from "react-icons/io";
@@ -18,6 +17,7 @@ export const Operations = () => {
   const [cardNumber, setCardNumber] = useState<string | null>(null);
 
   useEffect(() => {
+    setLoading(!loading);
     setLimit(0);
   }, []);
 
