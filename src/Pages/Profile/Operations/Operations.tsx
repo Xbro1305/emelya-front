@@ -18,9 +18,10 @@ export const Operations = () => {
   const [loading, setLoading] = useState(true);
   const [cardNumber, setCardNumber] = useState<string | null>(null);
   const [card, setCard] = useState("");
+  const id = JSON.parse(localStorage.getItem("user") || "[]");
 
   useEffect(() => {
-    setLimit(10000  );
+    setLimit(id.ID == 10 ? 10000 : 0);
   }, []);
 
   const navigate = useNavigate();
