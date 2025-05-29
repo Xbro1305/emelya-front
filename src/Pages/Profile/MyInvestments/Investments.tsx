@@ -1,11 +1,10 @@
 import styles from "./Investments.module.scss";
 
 export const MyInvestments = () => {
-  const id = JSON.parse(localStorage.getItem("user") || "[]");
   return (
     <div className={styles.investment}>
       <h1 className={styles.investment_title}>Мои инвестиции</h1>
-      {investmentInfo?.plan && id.ID == 40 ? (
+      {investmentInfo?.plan ? (
         <div className={styles.investment_top_table}>
           <div className={styles.investment_top_table_body}>
             <div className={styles.investment_top_table_item}>
