@@ -18,9 +18,10 @@ export const Operations = () => {
   const [loading, setLoading] = useState(true);
   const [cardNumber, setCardNumber] = useState<string | null>(null);
   const [card, setCard] = useState("");
+  const id = JSON.parse(localStorage.getItem("user") || "[]");
 
   useEffect(() => {
-    setLimit(0);
+    setLimit(id.ID == 40 ? 10000 : 0);
   }, []);
 
   const navigate = useNavigate();
@@ -198,7 +199,9 @@ export const Operations = () => {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
                       },
-                      data: { amount: Number(sum.split(" ₽")[0].replace(/\s+/g, "")) },
+                      data: {
+                        amount: Number(sum.split(" ₽")[0].replace(/\s+/g, "")),
+                      },
                     }
                   )
                     .then(() => setConfirm(true))
