@@ -69,7 +69,7 @@ const investmentInfo:
   | any = {
   id: 1,
   plan: "Легкий старт",
-  sum: "40 000 ₽",
+  sum: "10 000 ₽",
   percent: "80 ₽",
   date: "14.04.25-14.02.26",
 };
