@@ -32,10 +32,10 @@ export const Profile = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    // if (!token) {
-    //   navigate("/");
-    //   return;
-    // }
+    if (!token) {
+      navigate("/");
+      return;
+    }
     axios(`${import.meta.env.VITE_APP_API_URL}/auth/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -46,13 +46,13 @@ export const Profile = () => {
           setId(res.data.ID);
           localStorage.setItem("user", JSON.stringify(res.data));
         } else {
-          // localStorage.removeItem("token");
-          // navigate("/");
+          localStorage.removeItem("token");
+          navigate("/");
         }
       })
       .catch(() => {
-        // localStorage.removeItem("token");
-        // navigate("/");
+        localStorage.removeItem("token");
+        navigate("/");
       })
       .finally(() => {
         setLoading(false);

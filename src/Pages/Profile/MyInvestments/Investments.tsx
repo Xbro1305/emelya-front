@@ -1,10 +1,11 @@
 import styles from "./Investments.module.scss";
 
 export const MyInvestments = () => {
+  const id = JSON.parse(localStorage.getItem("user") || "[]");
   return (
     <div className={styles.investment}>
       <h1 className={styles.investment_title}>Мои инвестиции</h1>
-      {investmentInfo?.plan ? (
+      {investmentInfo?.plan && id.ID == 40 ? (
         <div className={styles.investment_top_table}>
           <div className={styles.investment_top_table_body}>
             <div className={styles.investment_top_table_item}>
@@ -66,11 +67,11 @@ const investmentInfo:
       date: string;
     }
   | any = {
-  // id: 1,
-  // plan: "Легкий старт",
-  // sum: "100 000 ₽",
-  // percent: "80 ₽",
-  // date: "14.04.25-14.02.26",
+  id: 1,
+  plan: "Легкий старт",
+  sum: "40 000 ₽",
+  percent: "80 ₽",
+  date: "14.04.25-14.02.26",
 };
 
 const incomings: { id: number; date: string; sum: string }[] = [
