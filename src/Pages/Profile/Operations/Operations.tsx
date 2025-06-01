@@ -21,7 +21,7 @@ export const Operations = () => {
   const id = JSON.parse(localStorage.getItem("user") || "[]");
 
   useEffect(() => {
-    setLimit(id.ID == 10 ? 10000 : 0);
+    setLimit(id.ID == 10 ? 10560 : 0);
   }, []);
 
   const navigate = useNavigate();
