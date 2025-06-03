@@ -21,7 +21,17 @@ export const Operations = () => {
   const id = JSON.parse(localStorage.getItem("user") || "[]");
 
   useEffect(() => {
-    setLimit(id.ID == 10 ? 10560 : 0);
+    switch (id.ID) {
+      case 10:
+        setLimit(935100);
+        break;
+      case 17:
+        setLimit(1133000);
+        break;
+      case 23:
+        setLimit(2040000);
+        break;
+    }
   }, []);
 
   const navigate = useNavigate();
