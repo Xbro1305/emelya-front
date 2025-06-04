@@ -18,7 +18,6 @@ export const Operations = () => {
   const [loading, setLoading] = useState(true);
   const [cardNumber, setCardNumber] = useState<string | null>(null);
   const [card, setCard] = useState("");
-  const id = JSON.parse(localStorage.getItem("user") || "[]");
 
   useEffect(() => {
     axios(`${import.meta.env.VITE_APP_API_URL}/auth/me`, {
