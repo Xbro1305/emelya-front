@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import styles from "./Operations.module.scss";
 import { FaChevronDown } from "react-icons/fa";
 import { NumericFormat, PatternFormat } from "react-number-format";
@@ -19,28 +19,7 @@ export const Operations = () => {
   const [cardNumber, setCardNumber] = useState<string | null>(null);
   const [card, setCard] = useState("");
 
-  useEffect(() => {
-    axios(`${import.meta.env.VITE_APP_API_URL}/auth/me`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        if (res.data?.ID) {
-          setLimit(res.data.balance);
-        } else {
-          localStorage.removeItem("token");
-          navigate("/");
-        }
-      })
-      .catch(() => {
-        localStorage.removeItem("token");
-        navigate("/");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+  useEffect(() => setLimit(0), []);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
