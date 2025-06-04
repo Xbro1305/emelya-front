@@ -21,17 +21,26 @@ export const Operations = () => {
   const id = JSON.parse(localStorage.getItem("user") || "[]");
 
   useEffect(() => {
-    switch (id.ID) {
-      case 10:
-        setLimit(935100);
-        break;
-      case 17:
-        setLimit(1133000);
-        break;
-      case 23:
-        setLimit(2040000);
-        break;
-    }
+    axios(`${import.meta.env.VITE_APP_API_URL}/auth/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (res.data?.ID) {
+          setLimit(res.data.balance);
+        } else {
+          localStorage.removeItem("token");
+          navigate("/");
+        }
+      })
+      .catch(() => {
+        localStorage.removeItem("token");
+        navigate("/");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   const navigate = useNavigate();
