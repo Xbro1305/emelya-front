@@ -8,6 +8,10 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".", 
+    "paths": {
+      "@/*": ["public_html/*"]
+    }
   }
 }
