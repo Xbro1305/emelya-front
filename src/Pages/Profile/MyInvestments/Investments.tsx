@@ -68,8 +68,8 @@ export const MyInvestments = () => {
       balance <= 500000
         ? "0.8% / день"
         : balance < 1000000
-        ? "1.0% / день"
-        : "1.2% / день",
+        ? "0.9% / день"
+        : "1.0% / день",
     date: getDateRangeToNextYear(),
   };
   return (
