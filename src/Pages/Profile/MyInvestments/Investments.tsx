@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import styles from "./Investments.module.scss";
 import axios from "axios";
 import { Loading } from "../../../widgets/Loading/Loading";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../../App";
 
 export const MyInvestments = () => {
   const [loading, setLoading] = useState(true);
@@ -47,6 +49,8 @@ export const MyInvestments = () => {
 
     return `${format(today)}-${format(nextYear)}`;
   }
+
+  const navigate = useNavigate();
 
   const investmentInfo:
     | {
@@ -96,7 +100,10 @@ export const MyInvestments = () => {
               <p>{investmentInfo.date}</p>
             </div>
           </div>
-          <button className={styles.investment_investButton}>
+          <button
+            onClick={() => navigate(PATHS.CALCULATOR)}
+            className={styles.investment_investButton}
+          >
             Инвестировать
           </button>
         </div>
