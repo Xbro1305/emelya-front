@@ -21,7 +21,6 @@ export const MyInvestments = () => {
       .then((res) => {
         if (res.data?.ID) {
           setBalance(res.data.balance);
-          res.data?.ID == 3 && setBalance(100000);
         } else {
           localStorage.removeItem("token");
         }
