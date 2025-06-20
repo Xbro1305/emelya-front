@@ -209,7 +209,10 @@ export const Header = ({ modal }: { modal?: string }) => {
             <Link to={"/"} className={styles.header_right_item}>
               О сервисе
             </Link>
-            <Link to={"/"} className={styles.header_right_item}>
+            <Link
+              to="https://www.cbr.ru/finorg/foinfo/?ogrn=1247700635478"
+              className={styles.header_right_item}
+            >
               Лицензия ЦБ
             </Link>
             <Link to={"/"} className={styles.header_right_item}>
@@ -704,7 +707,7 @@ export const Header = ({ modal }: { modal?: string }) => {
                 className={styles.investor_link}
                 onClick={() => setInvestorModal("register")}
               >
-                ЗАРЕГИСТРИРОВАТСЯ
+                ЗАРЕГИСТРИРОВАТЬСЯ
               </p>
             </form>
           </div>
