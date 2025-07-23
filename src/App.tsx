@@ -15,6 +15,11 @@ import { Partners } from "./Pages/Profile/Partners/Partners";
 import { ToastContainer } from "react-toastify";
 import { PersData } from "./Pages/Profile/PersData/Persdata";
 import { Details } from "./Pages/Profile/Details/Details";
+import { AdminLayout } from "./Pages/Admin/Layout/AdminLayout";
+import { Monitor } from "./Pages/Admin/Monitor/Monitor";
+import { Tariffs } from "./Pages/Admin/Tariffs/Tariffs";
+import { SearchById } from "./Pages/Admin/SearchById/SearchById";
+import { Login as AdminLogin } from "./Pages/Admin/Login/Login";
 
 function App() {
   return (
@@ -83,6 +88,12 @@ function App() {
           }
         />
         <Route path={PATHS.PROFILE} element={<ProfileNavigator />} />
+        <Route element={<AdminLayout />}>
+          <Route path={PATHS.ADMIN_MONITOR} element={<Monitor />} />
+          <Route path={PATHS.ADMIN_TARIFFS} element={<Tariffs />} />
+          <Route path={PATHS.ADMIN_SEARCH_BY_ID} element={<SearchById />} />
+        </Route>
+        <Route path={PATHS.ADMIN_LOGIN} element={<AdminLogin />} />
       </Routes>
     </BrowserRouter>
   );
@@ -91,7 +102,7 @@ function App() {
 const ProfileNavigator = () => {
   const token = localStorage.getItem("token");
   if (!token) {
-    return <Navigate to={"/login"} />;
+    // return <Navigate to={"/login"} />;
   }
 
   const tokenType = localStorage.getItem("profileType");
@@ -111,6 +122,10 @@ export const PATHS = {
   PARTNERS: "/profile/partners",
   PERS_DATA: "/profile/personal-data",
   DETAILS: "/profile/details",
+  ADMIN_MONITOR: "/admin/monitor",
+  ADMIN_TARIFFS: "/admin/tariffs",
+  ADMIN_LOGIN: "/admin/login",
+  ADMIN_SEARCH_BY_ID: "/admin/search-by-id",
 };
 
 const RoutePath = [

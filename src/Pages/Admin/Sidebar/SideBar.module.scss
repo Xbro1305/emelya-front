@@ -1,0 +1,51 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 50px;
+  background: linear-gradient(151.58deg, #4a2b00 0%, #0f0900 24.41%);
+  height: 100vh;
+  min-width: 300px;
+  width: 250px;
+  color: white;
+
+  &_logo {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 100px;
+    }
+  }
+
+  &_links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    a {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: white;
+      font-size: 18px;
+      border-radius: 10px;
+
+      svg {
+        color: #fbca71;
+        font-size: 22px;
+      }
+
+      &[aria-current="page"] {
+        backdrop-filter: blur(10px);
+        background: linear-gradient(
+          246.28deg,
+          rgba(180, 116, 39, 0.2) -17.22%,
+          rgba(239, 184, 97, 0.2) 39.48%,
+          rgba(198, 119, 50, 0.2) 98.49%
+        );
+      }
+    }
+  }
+}

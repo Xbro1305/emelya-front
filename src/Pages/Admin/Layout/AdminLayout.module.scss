@@ -1,0 +1,9 @@
+.adminLayout {
+  display: flex;
+  width: 100vw;
+
+  &_outlet {
+    width: calc(100vw - 300px);
+    background: black;
+  }
+}

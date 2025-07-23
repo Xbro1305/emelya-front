@@ -1,0 +1,31 @@
+.searchById {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+  color: white;
+
+  &_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    input {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #efb861;
+      background-color: transparent;
+      color: white;
+      font-size: 16px;
+    }
+  }
+
+  &_title {
+    font-family: Forum;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 100%;
+    color: white;
+    margin-bottom: 30px;
+  }
+}

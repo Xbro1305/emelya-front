@@ -50,11 +50,54 @@ export const Header = ({ modal }: { modal?: string }) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setWaiting(true);
+    const referrerId =
+      Number(new URLSearchParams(window.location.search).get("referrerId")) ||
+      0;
+    const data = {
+      last_name: surname,
+      first_name: name,
+      patronymic,
+      email,
+      phone,
+      referrerId,
+    };
+    if (referrerId == 0) {
+      delete (data as { referrerId?: number }).referrerId;
+    }
+
+    axios(`${import.meta.env.VITE_APP_API_URL}/auth/request-register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data,
+    })
+      .then(() => {
+        setInvestorModal("confirmRegister");
+      })
+      .catch((err) => {
+        const errorMessage = err?.response?.data?.error || "Ошибка";
+        toast.error(errorMessage, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+        });
+      })
+      .finally(() => {
+        setWaiting(false);
+      });
+    // setInvestorModal(false);
+  };
   return (
     <>
       {waiting && <Loading />}
       <header className={styles.header}>
         <Link to={PATHS.HOME} className={styles.header_logo}>
+          {" "}
           <img
             style={{
               height: `${logoSize}px`,
@@ -249,53 +292,7 @@ export const Header = ({ modal }: { modal?: string }) => {
               <IoMdClose style={{ width: "100%", height: "100%" }} />
             </button>
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setWaiting(true);
-                const referrerId =
-                  Number(
-                    new URLSearchParams(window.location.search).get(
-                      "referrerId"
-                    )
-                  ) || 0;
-                const data = {
-                  last_name: surname,
-                  first_name: name,
-                  patronymic,
-                  email,
-                  phone,
-                  referrerId,
-                };
-                if (referrerId == 0) {
-                  delete (data as { referrerId?: number }).referrerId;
-                }
-
-                axios(
-                  `${import.meta.env.VITE_APP_API_URL}/auth/request-register`,
-                  {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    data,
-                  }
-                )
-                  .then(() => {
-                    setInvestorModal("confirmRegister");
-                  })
-                  .catch((err) => {
-                    const errorMessage = err?.response?.data?.error || "Ошибка";
-                    toast.error(errorMessage, {
-                      position: "bottom-right",
-                      autoClose: 5000,
-                      hideProgressBar: false,
-                    });
-                  })
-                  .finally(() => {
-                    setWaiting(false);
-                  });
-                // setInvestorModal(false);
-              }}
+              onSubmit={(e) => handleSubmit(e)}
               className={styles.investor_form}
             >
               <label className={styles.investor_form_label}>
