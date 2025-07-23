@@ -16,32 +16,32 @@ interface Tariff {
   max?: number | null;
 }
 
-const tariffs = [
-  {
-    id: 1,
-    name: "Легкий старт",
-    percentPerDay: 0.8,
-    total: 240,
-    min: 1000,
-    max: 499000,
-  },
-  {
-    id: 2,
-    name: "Триумф",
-    percentPerDay: 0.9,
-    total: 270,
-    max: 999000,
-    min: 500000,
-  },
-  {
-    id: 3,
-    name: "Максимум",
-    percentPerDay: 1,
-    total: 300,
-    min: 1000000,
-    max: 1999000,
-  },
-];
+// const tariffs = [
+//   {
+//     id: 1,
+//     name: "Легкий старт",
+//     percentPerDay: 0.8,
+//     total: 240,
+//     min: 1000,
+//     max: 499000,
+//   },
+//   {
+//     id: 2,
+//     name: "Триумф",
+//     percentPerDay: 0.9,
+//     total: 270,
+//     max: 999000,
+//     min: 500000,
+//   },
+//   {
+//     id: 3,
+//     name: "Максимум",
+//     percentPerDay: 1,
+//     total: 300,
+//     min: 1000000,
+//     max: 1999000,
+//   },
+// ];
 
 export const Tariffs = () => {
   const [selectedTarif, setSelectedTarif] = useState<null | Tariff>(null);
