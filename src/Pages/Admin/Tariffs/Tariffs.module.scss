@@ -36,6 +36,7 @@
     table {
       border-collapse: collapse;
       width: 100%;
+      border: 1px solid #000;
 
       th,
       td {
@@ -57,7 +58,13 @@
         }
       }
 
-      th {
+      tr:last-child {
+        td {
+          border-bottom: none;
+        }
+      }
+
+      thead th {
         background: linear-gradient(
           119.25deg,
           rgba(46, 26, 0, 0.8) 25.28%,

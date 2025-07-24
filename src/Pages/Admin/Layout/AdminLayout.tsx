@@ -7,9 +7,10 @@ import { Loading } from "../../../widgets/Loading/Loading";
 
 export const AdminLayout = () => {
   const [loading, setLoading] = useState(true);
+  const baseUrl = import.meta.env.VITE_APP_API_URL;
 
   useEffect(() => {
-    axios("https://emelia-invest.com/api/auth/me", {
+    axios(`${baseUrl}/auth/me`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

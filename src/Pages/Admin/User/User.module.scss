@@ -1,0 +1,264 @@
+.user {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+  color: white;
+
+  &_title {
+    font-family: Forum;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 100%;
+    color: white;
+    margin-bottom: 30px;
+  }
+
+  &_subtitle {
+    font-family: Forum;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 100%;
+    color: white;
+    margin-bottom: 20px;
+  }
+
+  &_top {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        label {
+          font-size: 16px;
+          font-family: Inter;
+        }
+
+        input,
+        select {
+          padding: 10px;
+          border-radius: 10px;
+          font-size: 16px;
+          font-family: Inter;
+          border: none;
+          background: #333;
+          color: white;
+        }
+
+        button {
+          padding: 10px;
+          border-radius: 10px;
+          border: none;
+          background: #fbca71;
+          font-size: 16px;
+          font-family: Inter;
+          color: black;
+          cursor: pointer;
+
+          &:hover {
+            background: #f0be6f;
+          }
+
+          &:disabled {
+            background: #555;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+  }
+
+  &_options {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 20px;
+
+    button {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      background: #fbca71;
+      font-size: 16px;
+      font-family: Inter;
+      color: black;
+      cursor: pointer;
+
+      &:hover {
+        background: #f0be6f;
+      }
+
+      &:disabled {
+        background: #555;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  &_bottom {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+
+    &_section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+      overflow: auto;
+    }
+
+    &_table {
+      color: white;
+      border-radius: 25px;
+      overflow: auto;
+      border: 1px solid #efb861;
+      max-height: 350px;
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #000;
+
+        th,
+        td {
+          white-space: nowrap;
+          padding: 15px;
+          text-align: left;
+          border-bottom: 1px solid #efb861;
+
+          section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            button {
+              color: #fbca71;
+              background: none;
+              border: none;
+              font-size: 20px;
+            }
+          }
+        }
+
+        tr:last-child {
+          td {
+            border-bottom: none;
+          }
+        }
+
+        thead {
+          background: linear-gradient(
+            119.25deg,
+            rgba(46, 26, 0, 0.8) 25.28%,
+            rgba(24, 12, 0, 0.8) 98.75%
+          );
+          color: #fbca71;
+        }
+      }
+    }
+  }
+}
+
+.modal {
+  border-radius: 45px;
+  padding: 30px;
+  background: #000;
+  color: white;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: relative;
+  z-index: 1001;
+  border: 1px solid #efb861;
+
+  &_close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #efb861;
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+
+    &Modal {
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      display: block;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  &_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    label {
+      font-size: 16px;
+      font-family: Inter;
+    }
+
+    input,
+    select {
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-family: Inter;
+      border: none;
+      background: #333;
+      color: white;
+    }
+
+    button {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      background: #fbca71;
+      font-size: 16px;
+      font-family: Inter;
+      color: black;
+      cursor: pointer;
+
+      &:hover {
+        background: #f0be6f;
+      }
+    }
+  }
+
+  &_field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    input {
+      width: 100%;
+    }
+  }
+}

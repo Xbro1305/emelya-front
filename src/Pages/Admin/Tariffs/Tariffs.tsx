@@ -6,14 +6,12 @@ import { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { Loading } from "../../../widgets/Loading/Loading";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 interface Tariff {
-  id: number;
+  id?: number;
   name: string;
-  percentPerDay: number;
-  total: number;
-  min: number;
-  max?: number | null;
+  daily_reward: number | "";
 }
 
 // const tariffs = [
@@ -46,14 +44,14 @@ interface Tariff {
 export const Tariffs = () => {
   const [selectedTarif, setSelectedTarif] = useState<null | Tariff>(null);
   const [tariffName, setTariffName] = useState("");
-  const [percentPerDay, setPercentPerDay] = useState<number | "">(0);
-  const [minAmount, setMinAmount] = useState<number | "">(0);
-  const [maxAmount, setMaxAmount] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [dailyReward, setDailyReward] = useState<number | "">(0);
+  const [editing, setEditing] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [tariffs, setTariffs] = useState<Tariff[]>([]);
+  const baseUrl = import.meta.env.VITE_APP_API_URL;
 
   useEffect(() => {
-    axios("https://emelia-invest.com/api/admin/tariffs", {
+    axios(`${baseUrl}/admin/tariffs`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -62,16 +60,65 @@ export const Tariffs = () => {
       .then((res) => setTariffs(res.data))
       .catch((error) => {
         console.error("Error fetching tariffs:", error);
-        setTariffs(tariffs); // Fallback to initial tariffs if fetch fails
-      });
+        toast.error("Ошибка при загрузке тарифов");
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const handleCloseModal = () => {
     setSelectedTarif(null);
     setTariffName("");
-    setPercentPerDay("");
-    setMinAmount("");
-    setMaxAmount(null);
+    setDailyReward("");
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    let data: Tariff = {
+      name: tariffName,
+      daily_reward: dailyReward,
+    };
+
+    if (editing && selectedTarif) {
+      data = {
+        ...data,
+        id: selectedTarif.id,
+      };
+    }
+
+    axios(`${baseUrl}/admin/tariffs`, {
+      method: editing ? "PUT" : "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      data,
+    })
+      .then(() => {
+        setTariffs((prev) => {
+          if (editing) {
+            return prev.map((tariff) =>
+              tariff.id === selectedTarif?.id ? data : tariff
+            );
+          } else {
+            return [
+              ...prev,
+              { ...data, id: Math.max(...prev.map((t) => t.id || 0)) + 1 },
+            ];
+          }
+        });
+        setSelectedTarif(null);
+        setTariffName("");
+        setDailyReward(0);
+        toast.success(
+          editing ? "Тариф обновлен успешно" : "Тариф добавлен успешно"
+        );
+      })
+      .catch((error) => {
+        console.error("Error saving tariff:", error);
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -82,17 +129,12 @@ export const Tariffs = () => {
         <button
           onClick={() => {
             setSelectedTarif({
-              id: 0,
               name: "",
-              percentPerDay: 0,
-              total: 0,
-              min: 0,
-              max: null,
+              daily_reward: 0,
             });
             setTariffName("");
-            setPercentPerDay("");
-            setMinAmount("");
-            setMaxAmount(null);
+            setDailyReward("");
+            setEditing(false);
           }}
         >
           <LuPlus />
@@ -102,21 +144,23 @@ export const Tariffs = () => {
         <table border={1}>
           <thead>
             <tr>
+              <th>ID</th>
               <th>Название</th>
               <th>% в день</th>
               <th>% за весь период</th>
-              <th>Мин. сумма</th>
-              <th>Макс. сумма</th>
+              {/* <th>Мин. сумма</th>
+              <th>Макс. сумма</th> */}
               <th></th>
             </tr>
           </thead>
           <tbody>
             {tariffs.map((tariff) => (
               <tr key={tariff.id}>
+                <td>{tariff.id}</td>
                 <td>{tariff.name}</td>
-                <td>{tariff.percentPerDay}%</td>
-                <td>{tariff.total} %</td>
-                <td>
+                <td>{tariff.daily_reward}%</td>
+                <td>{Number(tariff.daily_reward) * 300} %</td>
+                {/* <td>
                   <NumericFormat
                     value={tariff.min}
                     displayType="text"
@@ -124,8 +168,8 @@ export const Tariffs = () => {
                     decimalSeparator=","
                   />{" "}
                   ₽
-                </td>
-                <td>
+                </td> */}
+                {/* <td>
                   {tariff.max ? (
                     <NumericFormat
                       value={tariff.max}
@@ -137,16 +181,15 @@ export const Tariffs = () => {
                   ) : (
                     "Нет лимита"
                   )}
-                </td>
+                </td> */}
                 <td>
                   <section>
                     <button
                       onClick={() => {
                         setSelectedTarif(tariff);
                         setTariffName(tariff.name);
-                        setPercentPerDay(tariff.percentPerDay);
-                        setMinAmount(tariff.min);
-                        setMaxAmount(tariff.max || null);
+                        setDailyReward(tariff.daily_reward);
+                        setEditing(true);
                       }}
                     >
                       <FaPenToSquare />
@@ -185,9 +228,9 @@ export const Tariffs = () => {
               <label>
                 <p>Проценты в день</p>
                 <NumericFormat
-                  defaultValue={percentPerDay}
+                  defaultValue={dailyReward}
                   onChange={(e) =>
-                    setPercentPerDay(Number(e.target.value.split(" %")[0]))
+                    setDailyReward(Number(e.target.value.split(" %")[0]))
                   }
                   displayType="input"
                   thousandSeparator=" "
@@ -200,7 +243,7 @@ export const Tariffs = () => {
               <label>
                 <p>Проценты за весь период</p>
                 <NumericFormat
-                  value={Number(percentPerDay) * 300}
+                  value={Number(dailyReward) * 300}
                   displayType="text"
                   thousandSeparator=" "
                   decimalSeparator=","
@@ -209,7 +252,7 @@ export const Tariffs = () => {
                   allowNegative={false}
                 />
               </label>{" "}
-              <label>
+              {/* <label>
                 <p>Минимальная сумма</p>
                 <NumericFormat
                   defaultValue={minAmount}
@@ -223,8 +266,8 @@ export const Tariffs = () => {
                   name="min"
                   allowNegative={false}
                 />
-              </label>{" "}
-              <label>
+              </label>{" "} */}
+              {/* <label>
                 <p>Максимальная сумма</p>
                 <NumericFormat
                   defaultValue={maxAmount}
@@ -238,24 +281,8 @@ export const Tariffs = () => {
                   name="max"
                   allowNegative={false}
                 />
-              </label>{" "}
-              <button
-                type="submit"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setLoading(true);
-                  console.log({
-                    id: selectedTarif.id,
-                    name: tariffName,
-                    percentPerDay: Number(percentPerDay),
-                    total: Number(percentPerDay) * 300,
-                    min: Number(minAmount),
-                    max: maxAmount,
-                  });
-                  setLoading(false);
-                  handleCloseModal();
-                }}
-              >
+              </label>{" "} */}
+              <button type="submit" onClick={handleSubmit}>
                 Сохранить
               </button>
             </form>

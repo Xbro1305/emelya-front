@@ -1,5 +1,6 @@
 import axios from "axios";
 import styles from "./Login.module.scss";
+import { toast } from "react-toastify";
 
 export const Login = () => {
   const baseUrl = import.meta.env.VITE_APP_API_URL;
@@ -11,7 +12,7 @@ export const Login = () => {
 
     console.log("Login data:", value);
 
-    axios(`${baseUrl}/api/auth/login-by-creds`, {
+    axios(`${baseUrl}/auth/login-by-creds`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,11 +23,12 @@ export const Login = () => {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        localStorage.setItem("token", res.data.token);
+        toast.success("Успешный вход в админ-панель");
+        window.location.href = "/admin/monitor";
       })
       .catch((error) => {
-        console.error("Login failed:", error);
-        alert("Login failed. Please check your credentials.");
+        toast.error("Ошибка входа: " + error.response.data.message);
       });
   };
   return (

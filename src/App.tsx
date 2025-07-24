@@ -20,6 +20,7 @@ import { Monitor } from "./Pages/Admin/Monitor/Monitor";
 import { Tariffs } from "./Pages/Admin/Tariffs/Tariffs";
 import { SearchById } from "./Pages/Admin/SearchById/SearchById";
 import { Login as AdminLogin } from "./Pages/Admin/Login/Login";
+import { User as AdminUser } from "./Pages/Admin/User/User";
 
 function App() {
   return (
@@ -92,6 +93,7 @@ function App() {
           <Route path={PATHS.ADMIN_MONITOR} element={<Monitor />} />
           <Route path={PATHS.ADMIN_TARIFFS} element={<Tariffs />} />
           <Route path={PATHS.ADMIN_SEARCH_BY_ID} element={<SearchById />} />
+          <Route path="/admin/user/:id" element={<AdminUser />} />
         </Route>
         <Route path={PATHS.ADMIN_LOGIN} element={<AdminLogin />} />
       </Routes>
