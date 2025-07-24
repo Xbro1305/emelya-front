@@ -71,7 +71,7 @@ export const User = () => {
   const [tariffs, setTariffs] = useState<any[]>([]); // Adjust type as needed
   const [rewards, setRewards] = useState<Reward[]>([]); // Adjust type as needed
   const [deposits, setDeposits] = useState<Deposit[]>([]);
-  const [withdrawals, setWithdrawals] = useState<Withdrawal[]>([]);
+  const [_, setWithdrawals] = useState<Withdrawal[]>([]);
 
   const baseUrl = import.meta.env.VITE_APP_API_URL;
 
