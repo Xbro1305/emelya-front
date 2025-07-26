@@ -63,7 +63,7 @@ export const SearchById = () => {
               maxWidth: id ? "100px" : "0px",
             }}
             className={styles.searchById_button}
-            onClick={handleSearch}
+            type="submit"
           >
             <FaSearch />
           </button>
