@@ -98,7 +98,7 @@ export const Tariffs = () => {
       .then(() => {
         setTariffs((prev) => {
           if (editing) {
-            return prev.map((tariff) =>
+            return prev?.map((tariff) =>
               tariff.id === selectedTarif?.id ? data : tariff
             );
           } else {
@@ -140,27 +140,28 @@ export const Tariffs = () => {
           <LuPlus />
         </button>
       </section>
-      <div className={styles.tariffs_table}>
-        <table border={1}>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Название</th>
-              <th>% в день</th>
-              <th>% за весь период</th>
-              {/* <th>Мин. сумма</th>
+      {tariffs && tariffs.length ? (
+        <div className={styles.tariffs_table}>
+          <table border={1}>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>% в день</th>
+                <th>% за весь период</th>
+                {/* <th>Мин. сумма</th>
               <th>Макс. сумма</th> */}
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {tariffs.map((tariff) => (
-              <tr key={tariff.id}>
-                <td>{tariff.id}</td>
-                <td>{tariff.name}</td>
-                <td>{tariff.daily_reward}%</td>
-                <td>{Number(tariff.daily_reward) * 300} %</td>
-                {/* <td>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {tariffs.map((tariff) => (
+                <tr key={tariff.id}>
+                  <td>{tariff.id}</td>
+                  <td>{tariff.name}</td>
+                  <td>{tariff.daily_reward}%</td>
+                  <td>{Number(tariff.daily_reward) * 300} %</td>
+                  {/* <td>
                   <NumericFormat
                     value={tariff.min}
                     displayType="text"
@@ -169,7 +170,7 @@ export const Tariffs = () => {
                   />{" "}
                   ₽
                 </td> */}
-                {/* <td>
+                  {/* <td>
                   {tariff.max ? (
                     <NumericFormat
                       value={tariff.max}
@@ -182,28 +183,31 @@ export const Tariffs = () => {
                     "Нет лимита"
                   )}
                 </td> */}
-                <td>
-                  <section>
-                    <button
-                      onClick={() => {
-                        setSelectedTarif(tariff);
-                        setTariffName(tariff.name);
-                        setDailyReward(tariff.daily_reward);
-                        setEditing(true);
-                      }}
-                    >
-                      <FaPenToSquare />
-                    </button>
-                    <button>
-                      <FaRegTrashCan />
-                    </button>
-                  </section>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                  <td>
+                    <section>
+                      <button
+                        onClick={() => {
+                          setSelectedTarif(tariff);
+                          setTariffName(tariff.name);
+                          setDailyReward(tariff.daily_reward);
+                          setEditing(true);
+                        }}
+                      >
+                        <FaPenToSquare />
+                      </button>
+                      <button>
+                        <FaRegTrashCan />
+                      </button>
+                    </section>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div>Нет тарифов</div>
+      )}
 
       {selectedTarif && (
         <div className={styles.tariffs_modal}>

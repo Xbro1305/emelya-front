@@ -26,7 +26,8 @@ export const SearchById = () => {
   const [id, setId] = useState("");
   const navigate = useNavigate();
 
-  const handleSearch = () => {
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setLoading(true);
 
     axios(`${baseUrl}/admin/user/search-id?id=${id} `, {
@@ -44,11 +45,12 @@ export const SearchById = () => {
       {loading && <Loading />}
       <section className={styles.searchById_header}>
         <h1 className={styles.searchById_header_title}>Поиск по ID</h1>
-        <div>
+        <form onSubmit={handleSearch}>
           <NumericFormat
             className={styles.searchById_input}
             placeholder="Введите ID"
             allowNegative={false}
+            name="id"
             prefix="ID: "
             onValueChange={(values) => {
               const { value } = values;
@@ -65,7 +67,7 @@ export const SearchById = () => {
           >
             <FaSearch />
           </button>
-        </div>
+        </form>
       </section>
 
       {users.length > 0 && (
