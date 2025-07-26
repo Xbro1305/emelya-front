@@ -4,6 +4,7 @@ import styles from "./AdminLayout.module.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Loading } from "../../../widgets/Loading/Loading";
+import { toast } from "react-toastify";
 
 export const AdminLayout = () => {
   const [loading, setLoading] = useState(true);
@@ -20,6 +21,7 @@ export const AdminLayout = () => {
         if (response.data.role !== "admin") {
           localStorage.removeItem("token");
           window.location.href = "/";
+          toast.error("Вы не админ!")
         }
       })
       .catch(() => {

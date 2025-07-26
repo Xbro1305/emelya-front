@@ -2,7 +2,7 @@ import { LuPlus } from "react-icons/lu";
 import styles from "./Tariffs.module.scss";
 import { NumericFormat } from "react-number-format";
 import { FaPenToSquare, FaRegTrashCan } from "react-icons/fa6";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { Loading } from "../../../widgets/Loading/Loading";
 import axios from "axios";
@@ -12,6 +12,7 @@ interface Tariff {
   id?: number;
   name: string;
   daily_reward: number | "";
+  block_until?: string | number;
 }
 
 // const tariffs = [
@@ -44,13 +45,15 @@ interface Tariff {
 export const Tariffs = () => {
   const [selectedTarif, setSelectedTarif] = useState<null | Tariff>(null);
   const [tariffName, setTariffName] = useState("");
-  const [dailyReward, setDailyReward] = useState<number | "">(0);
+  const [dailyReward, setDailyReward] = useState<number | "">("");
+  const [blockUntil, setBlockUntil] = useState<any | "">("");
   const [editing, setEditing] = useState(false);
+  const [deleting, setDeleting] = useState<false | Tariff>(false);
   const [loading, setLoading] = useState(true);
   const [tariffs, setTariffs] = useState<Tariff[]>([]);
   const baseUrl = import.meta.env.VITE_APP_API_URL;
 
-  useEffect(() => {
+  const refresh = () =>
     axios(`${baseUrl}/admin/tariffs`, {
       method: "GET",
       headers: {
@@ -63,6 +66,9 @@ export const Tariffs = () => {
         toast.error("Ошибка при загрузке тарифов");
       })
       .finally(() => setLoading(false));
+
+  useEffect(() => {
+    refresh();
   }, []);
 
   const handleCloseModal = () => {
@@ -74,10 +80,18 @@ export const Tariffs = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    const date = new Date();
+
+    const today = new Date();
+
+    date.setDate(today.getDate() + blockUntil);
+
+    console.log(date.setDate(today.getDate() + blockUntil));
 
     let data: Tariff = {
       name: tariffName,
       daily_reward: dailyReward,
+      block_until: `${date.toISOString()}`,
     };
 
     if (editing && selectedTarif) {
@@ -96,18 +110,6 @@ export const Tariffs = () => {
       data,
     })
       .then(() => {
-        setTariffs((prev) => {
-          if (editing) {
-            return prev?.map((tariff) =>
-              tariff.id === selectedTarif?.id ? data : tariff
-            );
-          } else {
-            return [
-              ...prev,
-              { ...data, id: Math.max(...prev.map((t) => t.id || 0)) + 1 },
-            ];
-          }
-        });
         setSelectedTarif(null);
         setTariffName("");
         setDailyReward(0);
@@ -118,7 +120,32 @@ export const Tariffs = () => {
       .catch((error) => {
         console.error("Error saving tariff:", error);
       })
-      .finally(() => setLoading(false));
+      .finally(() => refresh());
+  };
+
+  const deleteTariff = (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
+
+    e.preventDefault();
+
+    if (deleting && typeof deleting !== "boolean") {
+      axios(`${baseUrl}/admin/tariffs?id=${deleting.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then(() => {
+          setDeleting(false);
+          toast.success("Удалено успешно");
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Что-то пошло не так");
+        })
+        .finally(() => setLoading(false));
+    }
   };
 
   return (
@@ -147,8 +174,8 @@ export const Tariffs = () => {
               <tr>
                 <th>ID</th>
                 <th>Название</th>
-                <th>% в день</th>
-                <th>% за весь период</th>
+                <th>Доход в день</th>
+                <th>Срок блокировки</th>
                 {/* <th>Мин. сумма</th>
               <th>Макс. сумма</th> */}
                 <th></th>
@@ -159,8 +186,12 @@ export const Tariffs = () => {
                 <tr key={tariff.id}>
                   <td>{tariff.id}</td>
                   <td>{tariff.name}</td>
-                  <td>{tariff.daily_reward}%</td>
-                  <td>{Number(tariff.daily_reward) * 300} %</td>
+                  <td>{tariff.daily_reward}</td>
+                  <td>
+                    {typeof tariff?.block_until === "string"
+                      ? tariff.block_until.split("T")[0]
+                      : tariff.block_until}
+                  </td>
                   {/* <td>
                   <NumericFormat
                     value={tariff.min}
@@ -195,7 +226,7 @@ export const Tariffs = () => {
                       >
                         <FaPenToSquare />
                       </button>
-                      <button>
+                      <button onClick={() => setDeleting(tariff)}>
                         <FaRegTrashCan />
                       </button>
                     </section>
@@ -230,29 +261,34 @@ export const Tariffs = () => {
                 />
               </label>{" "}
               <label>
-                <p>Проценты в день</p>
+                <p>Дневное вознаграждение</p>
                 <NumericFormat
                   defaultValue={dailyReward}
                   onChange={(e) =>
-                    setDailyReward(Number(e.target.value.split(" %")[0]))
+                    setDailyReward(
+                      Number(e.target.value.split(" ₽")[0].replace(/\s/g, ""))
+                    )
                   }
                   displayType="input"
                   thousandSeparator=" "
                   decimalSeparator="."
-                  suffix=" %"
+                  suffix=" ₽"
                   name="percentPerDay"
                   allowNegative={false}
                 />
               </label>{" "}
               <label>
-                <p>Проценты за весь период</p>
+                <p>Срок блокировки</p>
                 <NumericFormat
-                  value={Number(dailyReward) * 300}
-                  displayType="text"
+                  defaultValue={blockUntil}
+                  onChange={(e) => {
+                    setBlockUntil(Number(e.target.value.split(" Дней")[0]));
+                  }}
+                  displayType="input"
                   thousandSeparator=" "
                   decimalSeparator=","
-                  suffix=" %"
-                  name="percentPerDay"
+                  suffix=" Дней"
+                  name="block_until"
                   allowNegative={false}
                 />
               </label>{" "}
@@ -289,6 +325,22 @@ export const Tariffs = () => {
               <button type="submit" onClick={handleSubmit}>
                 Сохранить
               </button>
+            </form>
+          </div>
+        </div>
+      )}
+      {deleting && (
+        <div className={styles.tariffs_modal}>
+          <div className={styles.tariffs_modal_body}>
+            <button
+              className={styles.tariffs_modal_body_closeButton}
+              onClick={() => setDeleting(false)}
+            >
+              <AiOutlineClose />
+            </button>
+            <h2>Вы хотите удалить тариф {deleting.name}?</h2>
+            <form onSubmit={deleteTariff}>
+              <button>Удалить</button>
             </form>
           </div>
         </div>
