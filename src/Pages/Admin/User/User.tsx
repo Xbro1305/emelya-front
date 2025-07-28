@@ -30,7 +30,7 @@ interface Deposit {
   amount: number;
   created_at: string;
   approved_at?: string;
-  block_until: string;
+  block_days: string;
   daily_reward?: number;
   status: string;
 }
@@ -175,34 +175,26 @@ export const User = () => {
 
     const formData = new FormData(e.target as HTMLFormElement);
 
-    const block_until = new Date(formData.get("block_until") as string);
-
-    block_until.setDate(
-      block_until.getDate() +
-        ((formData.get("block_duration") as string)
-          ? parseInt(formData.get("block_duration") as string, 10)
-          : 300) // Default to 300 days if not provided
-    );
-
     // {
     //   "approved_at": "string",
     //   "created_at": "string",
     //   "daily_reward": 0,
     // }
 
+    const date = new Date().toISOString();
+
+    const tariff = tariffs.find((i) => i.id == formData.get("tariff_id"));
+    console.log(tariff, date);
+
     const data = {
       amount: Number(
         (formData.get("amount") as string)?.split(" ₽")[0].replace(/\s/g, "")
       ),
-      block_until,
       tariff_id: parseInt(formData.get("tariff_id") as string, 10),
-      daily_reward: Number(
-        (formData.get("daily_reward") as string)
-          .split(" ₽")[0]
-          .replace(/\s/g, "")
-      ),
-      created_at: (formData.get("block_until") as string) + "T00:00:00.000Z",
-      approved_at: (formData.get("block_until") as string) + "T00:00:00.000Z",
+      block_days: tariff.block_days,
+      daily_reward: tariff.daily_reward,
+      created_at: date,
+      approved_at: date,
       initial_reward_amount: Number(
         (formData.get("initial_reward_amount") as string)
           .split(" ₽")[0]
@@ -442,7 +434,7 @@ export const User = () => {
                   <th>ID</th>
                   <th>Сумма</th>
                   <th>Дата создания</th>
-                  <th>Дата блокировки</th>
+                  <th>Срок блокировки</th>
                   <th>Дневное вознаграждение</th>
                 </tr>
               </thead>
@@ -460,10 +452,8 @@ export const User = () => {
                       />
                     </td>
                     <td>{new Date(deposit.created_at).toLocaleDateString()}</td>
-                    <td>
-                      {new Date(deposit.block_until).toLocaleDateString()}
-                    </td>
-                    <td>{deposit.daily_reward || 0} ₽</td>
+                    <td>{deposit.block_days}</td>
+                    <td>{deposit.daily_reward || 0} %</td>
                   </tr>
                 ))}
               </tbody>
@@ -540,28 +530,9 @@ export const User = () => {
                       type="date"
                       defaultValue={new Date().toISOString().split("T")[0]}
                       min={new Date().toISOString().split("T")[0]}
-                      name="block_until"
+                      name="created_at"
                     />
                   </div>
-                  <div className={styles.modal_field}>
-                    <label>Срок блокировки:</label>
-                    <NumericFormat
-                      placeholder="Введите срок блокировки в днях"
-                      allowNegative={false}
-                      suffix=" дней"
-                      name="block_duration"
-                    />
-                  </div>
-                  <div className={styles.modal_field}>
-                    <label>Дневное вознаграждение</label>
-                    <NumericFormat
-                      placeholder="Введите дневное вознаграждение в рублях"
-                      thousandSeparator=" "
-                      allowNegative={false}
-                      suffix=" ₽"
-                      name="daily_reward"
-                    />
-                  </div>{" "}
                   <div className={styles.modal_field}>
                     <label>Начальное вознаграждение</label>
                     <NumericFormat
@@ -577,7 +548,7 @@ export const User = () => {
                     <select name="tariff_id">
                       {tariffs.map((tariff) => (
                         <option key={tariff.id} value={tariff.id}>
-                          {tariff.name}
+                          {tariff.name} - {tariff.daily_reward} %
                         </option>
                       ))}
                     </select>

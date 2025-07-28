@@ -12,7 +12,7 @@ interface Tariff {
   id?: number;
   name: string;
   daily_reward: number | "";
-  block_until?: string | number;
+  block_days?: string | number;
 }
 
 // const tariffs = [
@@ -91,7 +91,7 @@ export const Tariffs = () => {
     let data: Tariff = {
       name: tariffName,
       daily_reward: dailyReward,
-      block_until: `${date.toISOString()}`,
+      block_days: `${date.toISOString()}`,
     };
 
     if (editing && selectedTarif) {
@@ -188,9 +188,9 @@ export const Tariffs = () => {
                   <td>{tariff.name}</td>
                   <td>{tariff.daily_reward}</td>
                   <td>
-                    {typeof tariff?.block_until === "string"
-                      ? tariff.block_until.split("T")[0]
-                      : tariff.block_until}
+                    {typeof tariff?.block_days === "string"
+                      ? tariff.block_days.split("T")[0]
+                      : tariff.block_days}
                   </td>
                   {/* <td>
                   <NumericFormat
