@@ -71,6 +71,8 @@ export const User = () => {
   const [tariffs, setTariffs] = useState<any[]>([]); // Adjust type as needed
   const [rewards, setRewards] = useState<Reward[]>([]); // Adjust type as needed
   const [deposits, setDeposits] = useState<Deposit[]>([]);
+  const [totalBalance, setTotalBalance] = useState(0);
+  const [withdrawal, setWithdrawal] = useState(0);
   const [_, setWithdrawals] = useState<Withdrawal[]>([]);
 
   const baseUrl = import.meta.env.VITE_APP_API_URL;
@@ -105,10 +107,6 @@ export const User = () => {
         toast.error("Ошибка при загрузке тарифов");
       });
 
-    // /api/admin/deposit/by-user
-
-    // /api/admin / user / operations;
-
     axios(`${baseUrl}/admin/user/operations?user_id=${id}`, {
       method: "GET",
       headers: {
@@ -124,6 +122,16 @@ export const User = () => {
         console.error("Error fetching user operations:", error);
         toast.error("Ошибка при загрузке операций пользователя");
       });
+
+    axios(`${baseUrl}/user/balance?user_id=${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      setTotalBalance(res.data.balance);
+      setWithdrawal(res.data.reward_balance);
+    });
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -195,6 +203,11 @@ export const User = () => {
       ),
       created_at: (formData.get("block_until") as string) + "T00:00:00.000Z",
       approved_at: (formData.get("block_until") as string) + "T00:00:00.000Z",
+      initial_reward_amount: Number(
+        (formData.get("initial_reward_amount") as string)
+          .split(" ₽")[0]
+          .replace(/\s/g, "") || "0"
+      ),
     };
 
     axios(`${baseUrl}/admin/deposit/create?user_id=${id}`, {
@@ -310,6 +323,27 @@ export const User = () => {
       {loading && <Loading />}
       <div className={styles.user_top}>
         <h1 className={styles.user_title}>Пользователь ID: {user?.ID}</h1>
+        <section>
+          <div className={styles.user_top_item}>
+            <h2>Cумма депозитов</h2>
+            <NumericFormat
+              value={totalBalance}
+              thousandSeparator=" "
+              displayType="text"
+              suffix=" ₽"
+            />
+          </div>
+          <div className={styles.user_top_item}>
+            <h2>Доступно на вывод</h2>
+
+            <NumericFormat
+              value={withdrawal}
+              displayType="text"
+              thousandSeparator=" "
+              suffix=" ₽"
+            />
+          </div>
+        </section>
         <form>
           <div className={styles.user_field}>
             <label>Имя:</label>
@@ -526,6 +560,16 @@ export const User = () => {
                       allowNegative={false}
                       suffix=" ₽"
                       name="daily_reward"
+                    />
+                  </div>{" "}
+                  <div className={styles.modal_field}>
+                    <label>Начальное вознаграждение</label>
+                    <NumericFormat
+                      placeholder="Введите начальное вознаграждение в рублях"
+                      thousandSeparator=" "
+                      allowNegative={false}
+                      suffix=" ₽"
+                      name="initial_reward_amount"
                     />
                   </div>
                   <div className={styles.modal_field}>
